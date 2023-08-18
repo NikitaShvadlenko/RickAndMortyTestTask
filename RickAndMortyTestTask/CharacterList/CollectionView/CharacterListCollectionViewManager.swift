@@ -21,7 +21,19 @@ protocol CharacterListCollectionViewManagerDelegate: AnyObject {
 
 class CharacterListCollectionViewManager: NSObject {
     weak var delegate: CharacterListCollectionViewManagerDelegate?
-    private var characterItems: [MovieCharacterListItem] = []
+    private var characterItems: [MovieCharacterListItem] = [
+        MovieCharacterListItem(name: "Rick Snaches"),
+        MovieCharacterListItem(name: "Rick Snaches"),
+        MovieCharacterListItem(name: "Rick Snaches"),
+        MovieCharacterListItem(name: "Rick Snaches"),
+        MovieCharacterListItem(name: "Rick Snaches"),
+        MovieCharacterListItem(name: "Rick Snaches"),
+        MovieCharacterListItem(name: "Rick Snaches"),
+        MovieCharacterListItem(name: "Rick Snaches"),
+        MovieCharacterListItem(name: "Rick Snaches"),
+        MovieCharacterListItem(name: "Rick Snaches"),
+        MovieCharacterListItem(name: "Rick Snaches")
+    ]
 }
 
 extension CharacterListCollectionViewManager: ManagesListCollectionView {
@@ -46,6 +58,8 @@ extension CharacterListCollectionViewManager: UICollectionViewDataSource {
         ) as? CharacterCell else {
             fatalError("failed to deqeue cell")
         }
+        let item = characterItems[indexPath.row]
+        cell.configure(name: item.name, image: item.image!)
         return cell
     }
 
@@ -61,8 +75,8 @@ extension CharacterListCollectionViewManager: UICollectionViewDelegateFlowLayout
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        let totalWidth = collectionView.bounds.width
-        let availibleWidth = totalWidth - Constants.horizontalCardInsets * (Constants.numberOfHorizontalCards - 1)
+        let totalWidth = collectionView.bounds.width - Constants.leftSectionInset * 2
+        let availibleWidth = totalWidth - (Constants.spaceBetweenCards * (Constants.numberOfHorizontalCards - 1))
         let width = availibleWidth / Constants.numberOfHorizontalCards
         let height = width * 1.3
         return CGSize(width: width, height: height)
@@ -73,7 +87,7 @@ extension CharacterListCollectionViewManager: UICollectionViewDelegateFlowLayout
         layout collectionViewLayout: UICollectionViewLayout,
         insetForSectionAt section: Int
     ) -> UIEdgeInsets {
-        Constants.cardInsets
+        Constants.collectionViewInsets
     }
 
     func collectionView(
@@ -84,17 +98,25 @@ extension CharacterListCollectionViewManager: UICollectionViewDelegateFlowLayout
         Constants.spaceBetweenCards
     }
 
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        Constants.spaceBetweenCards
+    }
+
     private enum Constants {
         static let numberOfHorizontalCards: CGFloat = 2
         static let spaceBetweenCards: CGFloat = 16
-        static let horizontalCardInsets: CGFloat = 16
-        static let verticalCardInsets: CGFloat = 8
-        static let cardInsets = UIEdgeInsets(
-            top: verticalCardInsets,
-            left: horizontalCardInsets,
-            bottom: verticalCardInsets,
-            right: horizontalCardInsets
+        static let leftSectionInset: CGFloat = 20
+        static let topSectionInset: CGFloat = 30
+        static let verticalSectionInset: CGFloat = 16
+        static let collectionViewInsets = UIEdgeInsets(
+            top: topSectionInset,
+            left: leftSectionInset,
+            bottom: verticalSectionInset,
+            right: leftSectionInset
         )
     }
-
 }
