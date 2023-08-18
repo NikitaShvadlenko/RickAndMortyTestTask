@@ -6,11 +6,15 @@ enum CharacterListAssembly {
         let presenter = CharacterListPresenter()
         let interactor = CharacterListInteractor()
         let router = CharacterListRouter()
+        let collectionViewManager = CharacterListCollectionViewManager()
 
         viewController.presenter = presenter
+        viewController.setCollectionViewDelegate(collectionViewManager)
+        viewController.setCollectionViewDataSource(collectionViewManager)
 
         presenter.view = viewController
         presenter.interactor = interactor
+        presenter.collectionViewManager = collectionViewManager
         presenter.router = router
 
         interactor.presenter = presenter

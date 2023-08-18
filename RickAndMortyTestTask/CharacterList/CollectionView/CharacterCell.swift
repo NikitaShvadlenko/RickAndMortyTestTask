@@ -64,8 +64,7 @@ extension CharacterCell {
                 imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
                 imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
                 imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-
-                nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+                imageView.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -16),
                 nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
                 nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
                 nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)

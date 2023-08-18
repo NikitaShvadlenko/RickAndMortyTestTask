@@ -5,6 +5,7 @@ final class CharacterListPresenter {
     weak var moduleOutput: CharacterListModuleOutput?
     var interactor: CharacterListInteractorInput?
     var router: CharacterListRouterInput?
+    var collectionViewManager: ManagesListCollectionView?
 }
 
 // MARK: - CharacterListViewOutput

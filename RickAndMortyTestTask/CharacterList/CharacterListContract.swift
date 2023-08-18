@@ -1,6 +1,9 @@
+import UIKit
 // sourcery: AutoMockable
 protocol CharacterListViewInput: AnyObject {
     func configureViews()
+    func setCollectionViewDelegate(_ delegate: UICollectionViewDelegate)
+    func setCollectionViewDataSource(_ dataSource: UICollectionViewDataSource)
 }
 
 protocol CharacterListViewOutput {
