@@ -1,6 +1,9 @@
 import UIKit
 
 final class CharacterListView: UIView {
+
+    let characterCollecitonView = CaracterListCollectionView()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureViews()
@@ -15,6 +18,15 @@ final class CharacterListView: UIView {
 // MARK: - Private methods
 extension CharacterListView {
     private func configureViews() {
-        backgroundColor = .red
+        backgroundColor = Asset.backgroundColor.color
+        addSubview(characterCollecitonView)
+        NSLayoutConstraint.activate(
+            [
+                characterCollecitonView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+                characterCollecitonView.leadingAnchor.constraint(equalTo: leadingAnchor),
+                characterCollecitonView.trailingAnchor.constraint(equalTo: trailingAnchor),
+                characterCollecitonView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+        ]
+        )
     }
 }
