@@ -17,6 +17,7 @@ final class CharacterCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 10
+        imageView.backgroundColor = .red
         return imageView
     }()
 
@@ -60,17 +61,16 @@ extension CharacterCell {
 
         NSLayoutConstraint.activate(
             [
-                nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-                nameLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-                nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-
-                imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-                imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: -8),
+                imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+                imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
                 imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-                imageView.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -16),
-                imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: -8)
+
+                nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 16),
+                nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+                nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
+                nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
             ]
         )
+
     }
 }
