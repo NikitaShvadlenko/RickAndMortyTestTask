@@ -10,28 +10,34 @@ import UIKit
 
 protocol ManagesListCollectionView {
     var characters: [CharacterListItem] { get }
-    var delegate: CharacterListCollectionViewManagerDelegate? { get set }
+    var delegate: CharacterListCollectionManagerDelegate? { get set }
     func setCharacterList(with movieCharacterListItems: [CharacterListItem])
 }
 
-protocol CharacterListCollectionViewManagerDelegate: AnyObject {
-    func characterListCollectionViewManager(
-        _ characterListCollectionViewManager: ManagesListCollectionView,
+protocol CharacterListCollectionManagerDelegate: AnyObject {
+    func characterListCollectionManager(
+        _ characterListCollectionManager: ManagesListCollectionView,
         didSelectItemAt indexPath: IndexPath
     )
 
-    func charactersListCollectionNeedsNextPage(
-        _ charactersListCollection: ManagesListCollectionView
+    func characterListCollectionManager(
+        _ characterListCollectionManager: ManagesListCollectionView,
+        needsImageFor indexPath: IndexPath,
+        completion: @escaping (_ imageData: Data) -> Void
+    )
+
+    func characterListCollectionManagerNeedsNextPage(
+        _ characterListCollectionManager: ManagesListCollectionView
     )
 }
 
 class CharacterListCollectionViewManager: NSObject {
-    weak var delegate: CharacterListCollectionViewManagerDelegate?
+    weak var delegate: CharacterListCollectionManagerDelegate?
     private(set) var characters: [CharacterListItem] = []
+    private var imageWaitingIndexPaths = Set<IndexPath>()
 }
 
 extension CharacterListCollectionViewManager: ManagesListCollectionView {
-
     func setCharacterList(with movieCharacterListItems: [CharacterListItem]) {
         characters = movieCharacterListItems
 
@@ -59,7 +65,7 @@ extension CharacterListCollectionViewManager: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.characterListCollectionViewManager(self, didSelectItemAt: indexPath)
+        delegate?.characterListCollectionManager(self, didSelectItemAt: indexPath)
     }
 }
 
@@ -102,9 +108,35 @@ extension CharacterListCollectionViewManager: UICollectionViewDelegateFlowLayout
     }
 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.bounds.size.height) {
-            delegate?.charactersListCollectionNeedsNextPage(self)
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.bounds.size.height - 100) {
+            delegate?.characterListCollectionManagerNeedsNextPage(self)
         }
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        willDisplay cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        imageWaitingIndexPaths.insert(indexPath)
+        let cell = cell as? CharacterCell
+        delegate?.characterListCollectionManager(
+            self,
+            needsImageFor: indexPath,
+            completion: { [weak self, weak cell] (imageData: Data) in
+                guard self?.imageWaitingIndexPaths.contains(indexPath) == true else { return }
+                self?.imageWaitingIndexPaths.remove(indexPath)
+                cell?.configureImage(imageData)
+            }
+        )
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didEndDisplaying cell: UICollectionViewCell,
+        forItemAt indexPath: IndexPath
+    ) {
+        imageWaitingIndexPaths.remove(indexPath)
     }
 }
 

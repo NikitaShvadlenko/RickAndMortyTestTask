@@ -10,6 +10,7 @@ import Foundation
 
 protocol RickAndMortyAPIClientProtocol {
     func fetchCharacters(for page: Int) async throws -> CharactersListResponse
+    func fetchImage(from url: URL) async throws -> Data
 }
 
 final class RickAndMortyAPIClient {
@@ -30,11 +31,20 @@ final class RickAndMortyAPIClient {
 
 // MARK: - RickAndMortyAPIClientProtocol
 extension RickAndMortyAPIClient: RickAndMortyAPIClientProtocol {
+    func fetchImage(from url: URL) async throws -> Data {
+        let (data, response) = try await session.data(from: url)
+        guard let httpResonse = response as? HTTPURLResponse,
+              httpResonse.statusCode == 200 else {
+            throw RickAndMortyApiError.invalidResponse
+        }
+        return data
+    }
+
     func fetchCharacters(for page: Int) async throws -> CharactersListResponse {
-        let url = try setRequestUrl(baseUrlString: baseURL, requestType: .characters)
-        var request = URLRequest(url: url)
-        request.allHTTPHeaderFields = ["page": "\(page)"]
-        let (data, response) = try await session.data(for: request)
+        var url = try setRequestUrl(baseUrlString: baseURL, requestType: .characters)
+        let queryItem = URLQueryItem(name: "page", value: "\(page)")
+        url.append(queryItems: [queryItem])
+        let (data, response) = try await session.data(from: url)
         guard let httpResonse = response as? HTTPURLResponse,
               httpResonse.statusCode == 200 else {
             throw RickAndMortyApiError.invalidResponse

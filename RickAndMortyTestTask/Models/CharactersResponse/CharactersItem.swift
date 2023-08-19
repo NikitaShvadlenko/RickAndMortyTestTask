@@ -16,7 +16,7 @@ struct CharacterItem: Codable {
     let gender: String
     let origin: CharacterOrigin
     let location: CharacterLocation
-    let image: String
+    let image: URL
 }
 
 struct CharacterOrigin: Codable {

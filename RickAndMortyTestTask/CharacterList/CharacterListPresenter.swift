@@ -9,6 +9,7 @@ final class CharacterListPresenter {
 
     private var currentPage = 0
     private var isLoading = false
+    private var loadImageCompletions: [URL: (Data) -> Void] = [:]
 }
 
 // MARK: - CharacterListViewOutput
@@ -20,6 +21,22 @@ extension CharacterListPresenter: CharacterListViewOutput {
 
 // MARK: - CharacterListInteractorOutput
 extension CharacterListPresenter: CharacterListInteractorOutput {
+    func interactor(
+        _ interactor: CharacterListInteractorInput,
+        didFetchImageData result: Result<Data, Error>,
+        forURL url: URL
+    ) {
+        switch result {
+        case let .success(data):
+            let completion = loadImageCompletions[url]
+            loadImageCompletions.removeValue(forKey: url)
+            completion?(data)
+
+        case .failure:
+            break
+        }
+    }
+
     func interactor(
         _ interactor: CharacterListInteractorInput,
         didFetchCharacters result: Result<[CharacterListItem], Error>,
@@ -38,16 +55,31 @@ extension CharacterListPresenter: CharacterListInteractorOutput {
     }
 }
 // MARK: - CharacterListCollectionViewManagerDelegate
-extension CharacterListPresenter: CharacterListCollectionViewManagerDelegate {
-    func characterListCollectionViewManager(
-        _ characterListCollectionViewManager: ManagesListCollectionView,
-        didSelectItemAt indexPath: IndexPath
-    ) {
-        print("Selected item")
+extension CharacterListPresenter: CharacterListCollectionManagerDelegate {
+    func characterListCollectionManagerNeedsNextPage(_ characterListCollectionManager: ManagesListCollectionView) {
+        loadNextPage()
     }
 
-    func charactersListCollectionNeedsNextPage(_ charactersListCollection: ManagesListCollectionView) {
-        loadNextPage()
+    func characterListCollectionManager(
+        _ characterListCollectionManager: ManagesListCollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        print("Selected Item")
+    }
+
+    func characterListCollectionManager(
+        _ characterListCollectionManager: ManagesListCollectionView,
+        needsImageFor indexPath: IndexPath,
+        completion: @escaping (Data) -> Void) {
+            guard let collectionViewManager = collectionViewManager else { return }
+            let url = collectionViewManager.characters[indexPath.item].image
+            loadImageCompletions[url] = completion
+            interactor?.fetchImage(url: url)
+    }
+
+    func characterListCollectionViewManagerNeedsNextPage(
+        _ characterListCollectionViewManager: ManagesListCollectionView) {
+
     }
 }
 // MARK: - CharacterListRouterOutput
