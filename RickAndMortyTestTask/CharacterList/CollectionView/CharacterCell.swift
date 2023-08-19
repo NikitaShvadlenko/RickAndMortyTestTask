@@ -8,16 +8,21 @@
 
 import UIKit
 
-// TODO: Spinner while loading image, placeholder image if failed
-
 final class CharacterCell: UICollectionViewCell {
+
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .large)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
 
     private lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 10
-        imageView.backgroundColor = .red
+        imageView.backgroundColor = Asset.blackCard.color
+        imageView.addSubview(activityIndicator)
         return imageView
     }()
 
@@ -41,6 +46,11 @@ final class CharacterCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
+    override func prepareForReuse() {
+        imageView.image = nil
+        activityIndicator.startAnimating()
+    }
 }
 // MARK: - Public Methods
 extension CharacterCell {
@@ -49,6 +59,7 @@ extension CharacterCell {
     }
 
     public func configureImage(_ imageData: Data) {
+        activityIndicator.stopAnimating()
         imageView.image = UIImage(data: imageData)
     }
 }
@@ -71,7 +82,9 @@ extension CharacterCell {
                 imageView.bottomAnchor.constraint(equalTo: nameLabel.topAnchor, constant: -16),
                 nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
                 nameLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8),
-                nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16)
+                nameLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+                activityIndicator.centerXAnchor.constraint(equalTo: imageView.centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: imageView.centerYAnchor)
             ]
         )
 

@@ -3,16 +3,28 @@ import Foundation
 final class CharacterListInteractor {
     weak var presenter: CharacterListInteractorOutput?
     var apiClient: RickAndMortyAPIClientProtocol?
+    private let imageCache = NSCache<NSURL, NSData>()
 }
 
 // MARK: - CharacterListInteractorInput
 extension CharacterListInteractor: CharacterListInteractorInput {
     func fetchImage(url: URL) {
+
+        if let data = imageCache.object(forKey: url as NSURL) as Data? {
+            presenter?.interactor(
+                self,
+                didFetchImageData: .success(data),
+                forURL: url
+            )
+            return
+        }
+
         guard let apiClient = apiClient else { return }
         Task {
             do {
                 let result = try await apiClient.fetchImage(from: url)
                 Task { @MainActor in
+                    self.imageCache.setObject(result as NSData, forKey: url as NSURL)
                     presenter?.interactor(self, didFetchImageData: .success(result), forURL: url)
                 }
             } catch {
