@@ -10,7 +10,7 @@ import Foundation
 
 struct CharactersResponse: Codable {
     let info: Info
-    let results: CharacterItem
+    let results: [CharacterItem]
 }
 
 struct Info: Codable {

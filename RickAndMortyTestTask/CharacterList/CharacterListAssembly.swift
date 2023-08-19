@@ -7,6 +7,7 @@ enum CharacterListAssembly {
         let interactor = CharacterListInteractor()
         let router = CharacterListRouter()
         let collectionViewManager = CharacterListCollectionViewManager()
+        let apiClient = RickAndMortyAPIClient()
 
         viewController.presenter = presenter
         viewController.setCollectionViewDelegate(collectionViewManager)
@@ -18,6 +19,7 @@ enum CharacterListAssembly {
         presenter.router = router
 
         interactor.presenter = presenter
+        interactor.apiClient = apiClient
 
         router.viewController = viewController
         router.presenter = presenter

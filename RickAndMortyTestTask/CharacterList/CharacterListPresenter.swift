@@ -12,11 +12,16 @@ final class CharacterListPresenter {
 extension CharacterListPresenter: CharacterListViewOutput {
     func viewDidLoad(_ view: CharacterListViewInput) {
         view.configureViews()
+        interactor?.fetchCharacterList()
     }
 }
 
 // MARK: - CharacterListInteractorOutput
 extension CharacterListPresenter: CharacterListInteractorOutput {
+    func interactor(_ interactor: CharacterListInteractorInput, didFetchCharacterList list: [CharacterItem]) {
+        print(list[0].name)
+    }
+
 }
 
 // MARK: - CharacterListRouterOutput
