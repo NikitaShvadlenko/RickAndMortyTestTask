@@ -15,22 +15,16 @@ final class CharacterListViewController: UIViewController {
         super.viewDidLoad()
         presenter?.viewDidLoad(self)
     }
+
+    func setCollectionViewManager(_ manager: ManagesListCollectionView) {
+        manager.setCollectionView(characterListView.collectionView)
+        characterListView.collectionView.dataSource = manager.dataSource
+        characterListView.collectionView.delegate = manager
+    }
 }
 
 // MARK: - CharacterListViewInput
 extension CharacterListViewController: CharacterListViewInput {
-    func reloadCollection() {
-        characterListView.collectionView.reloadData()
-    }
-
-    func setCollectionViewDelegate(_ delegate: UICollectionViewDelegate) {
-        characterListView.collectionView.delegate = delegate
-    }
-
-    func setCollectionViewDataSource(_ dataSource: UICollectionViewDataSource) {
-        characterListView.collectionView.dataSource = dataSource
-    }
-
     func configureViews() {
     }
 }

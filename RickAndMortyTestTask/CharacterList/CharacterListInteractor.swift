@@ -9,7 +9,6 @@ final class CharacterListInteractor {
 // MARK: - CharacterListInteractorInput
 extension CharacterListInteractor: CharacterListInteractorInput {
     func fetchImage(url: URL) {
-
         if let data = imageCache.object(forKey: url as NSURL) as Data? {
             presenter?.interactor(
                 self,

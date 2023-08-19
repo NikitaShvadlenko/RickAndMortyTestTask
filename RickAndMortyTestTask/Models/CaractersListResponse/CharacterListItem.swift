@@ -8,7 +8,8 @@
 
 import UIKit
 
-struct CharacterListItem: Codable {
+struct CharacterListItem: Codable, Hashable {
+    let identifier = UUID()
     let name: String
     let image: URL
 }

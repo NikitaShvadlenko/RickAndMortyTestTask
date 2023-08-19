@@ -47,7 +47,6 @@ extension CharacterListPresenter: CharacterListInteractorOutput {
         case let .success(characters):
             currentPage = page
             collectionViewManager.setCharacterList(with: collectionViewManager.characters + characters)
-            view?.reloadCollection()
         case let .failure(error):
             print(error)
         }

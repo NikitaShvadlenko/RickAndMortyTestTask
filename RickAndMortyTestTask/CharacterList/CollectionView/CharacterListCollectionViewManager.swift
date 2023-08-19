@@ -8,10 +8,16 @@
 
 import UIKit
 
-protocol ManagesListCollectionView {
+enum Section {
+    case main
+}
+
+protocol ManagesListCollectionView: UICollectionViewDelegate {
     var characters: [CharacterListItem] { get }
     var delegate: CharacterListCollectionManagerDelegate? { get set }
+    var dataSource: UICollectionViewDiffableDataSource<Section, CharacterListItem> { get }
     func setCharacterList(with movieCharacterListItems: [CharacterListItem])
+    func setCollectionView(_ collectionView: UICollectionView)
 }
 
 protocol CharacterListCollectionManagerDelegate: AnyObject {
@@ -31,42 +37,48 @@ protocol CharacterListCollectionManagerDelegate: AnyObject {
     )
 }
 
-class CharacterListCollectionViewManager: NSObject {
+final class CharacterListCollectionViewManager: NSObject {
     weak var delegate: CharacterListCollectionManagerDelegate?
-    private(set) var characters: [CharacterListItem] = []
+    private(set) var characters: [CharacterListItem] = [] {
+        didSet {
+            configureSnapshot()
+        }
+    }
     private var imageWaitingIndexPaths = Set<IndexPath>()
+
+    weak var collecitonView: UICollectionView?
+    lazy var dataSource: UICollectionViewDiffableDataSource<Section, CharacterListItem> = {
+        guard let collectionView = self.collecitonView else {
+            fatalError("CollectionView was not set")
+        }
+
+        let cellRegistration = UICollectionView
+            .CellRegistration<CharacterCell, CharacterListItem> { (cell, _, item) in
+                cell.configureName(item.name)
+            }
+
+        return UICollectionViewDiffableDataSource<Section, CharacterListItem>(
+            collectionView: collectionView
+            // swiftlint:disable line_length
+        ) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: CharacterListItem) -> UICollectionViewCell? in
+
+            return collectionView.dequeueConfiguredReusableCell(
+                using: cellRegistration,
+                for: indexPath,
+                item: identifier
+            )
+        }
+    }()
 }
 
 extension CharacterListCollectionViewManager: ManagesListCollectionView {
+    func setCollectionView(_ collectionView: UICollectionView) {
+        self.collecitonView = collectionView
+    }
+
     func setCharacterList(with movieCharacterListItems: [CharacterListItem]) {
         characters = movieCharacterListItems
 
-    }
-}
-
-// TODO: Implement Diffable Data Source
-extension CharacterListCollectionViewManager: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        characters.count
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "\(CharacterCell.self)",
-            for: indexPath
-        ) as? CharacterCell else {
-            fatalError("failed to deqeue cell")
-        }
-        let item = characters[indexPath.row]
-        cell.configureName(item.name)
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        delegate?.characterListCollectionManager(self, didSelectItemAt: indexPath)
     }
 }
 
@@ -141,6 +153,16 @@ extension CharacterListCollectionViewManager: UICollectionViewDelegateFlowLayout
     }
 }
 
+// MARK: - Private Methods
+extension CharacterListCollectionViewManager {
+    private func configureSnapshot() {
+        let section = Section.main
+        var snapshot = NSDiffableDataSourceSnapshot<Section, CharacterListItem>()
+        snapshot.appendSections([section])
+        snapshot.appendItems(characters)
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+}
 // MARK: - Constants
 extension CharacterListCollectionViewManager {
     private enum Constants {
