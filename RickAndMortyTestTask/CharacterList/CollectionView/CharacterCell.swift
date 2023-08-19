@@ -30,7 +30,8 @@ final class CharacterCell: UICollectionViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 17)
         label.adjustsFontSizeToFitWidth = true
-        label.numberOfLines = 0
+        label.numberOfLines = 1
+        label.minimumScaleFactor = 0.8
         label.textColor = Asset.white.color
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
