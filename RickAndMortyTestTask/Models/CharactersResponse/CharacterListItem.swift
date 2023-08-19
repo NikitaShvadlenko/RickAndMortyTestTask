@@ -8,7 +8,8 @@
 
 import UIKit
 
-struct MovieCharacterListItem {
+struct CharacterListItem: Codable {
     let name: String
-    let image = UIImage(systemName: "star.fill")
+    let image: URL
 }
+
