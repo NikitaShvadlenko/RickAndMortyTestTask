@@ -12,4 +12,3 @@ struct CharacterListItem: Codable {
     let name: String
     let image: URL
 }
-

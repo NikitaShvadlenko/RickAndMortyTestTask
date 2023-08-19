@@ -12,4 +12,3 @@ struct CharactersResponse: Codable {
     let info: Info
     let results: [CharacterItem]
 }
-

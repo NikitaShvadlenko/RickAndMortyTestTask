@@ -44,6 +44,7 @@ extension CharacterListCollectionViewManager: ManagesListCollectionView {
     }
 }
 
+// TODO: Implement Diffable Data Source
 extension CharacterListCollectionViewManager: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         characters.count
