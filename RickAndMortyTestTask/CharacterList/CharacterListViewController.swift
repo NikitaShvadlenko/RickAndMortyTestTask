@@ -20,15 +20,15 @@ final class CharacterListViewController: UIViewController {
 // MARK: - CharacterListViewInput
 extension CharacterListViewController: CharacterListViewInput {
     func reloadCollection() {
-        characterListView.characterCollecitonView.reloadCollection()
+        characterListView.collectionView.reloadData()
     }
 
     func setCollectionViewDelegate(_ delegate: UICollectionViewDelegate) {
-        characterListView.characterCollecitonView.delegate = delegate
+        characterListView.collectionView.delegate = delegate
     }
 
     func setCollectionViewDataSource(_ dataSource: UICollectionViewDataSource) {
-        characterListView.characterCollecitonView.dataSource = dataSource
+        characterListView.collectionView.dataSource = dataSource
     }
 
     func configureViews() {
