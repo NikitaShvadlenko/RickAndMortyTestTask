@@ -18,7 +18,7 @@ protocol CharacterListInteractorInput {
 
 // sourcery: AutoMockable
 protocol CharacterListInteractorOutput: AnyObject {
-    func interactor(_ interactor: CharacterListInteractorInput, didFetchCharacterList list: [CharacterItem])
+    func interactor(_ interactor: CharacterListInteractorInput, didFetchCharacterList list: [CharacterListItem])
 }
 
 // sourcery: AutoMockable

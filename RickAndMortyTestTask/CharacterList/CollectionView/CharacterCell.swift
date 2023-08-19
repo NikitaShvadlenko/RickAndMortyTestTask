@@ -44,9 +44,12 @@ final class CharacterCell: UICollectionViewCell {
 }
 // MARK: - Public Methods
 extension CharacterCell {
-    public func configure(name: String, image: UIImage) {
+    public func configureName(_ name: String) {
         nameLabel.text = name
-        imageView.image = image
+    }
+
+    public func configureImage(_ imageData: Data) {
+        imageView.image = UIImage(data: imageData)
     }
 }
 

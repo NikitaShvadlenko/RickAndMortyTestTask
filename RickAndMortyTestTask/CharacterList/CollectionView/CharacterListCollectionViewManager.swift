@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ManagesListCollectionView {
-    func setMovieCharacterList(with movieCharacterListItems: [MovieCharacterListItem])
+    func setCharacterList(with movieCharacterListItems: [CharacterListItem])
 }
 
 protocol CharacterListCollectionViewManagerDelegate: AnyObject {
@@ -21,23 +21,12 @@ protocol CharacterListCollectionViewManagerDelegate: AnyObject {
 
 class CharacterListCollectionViewManager: NSObject {
     weak var delegate: CharacterListCollectionViewManagerDelegate?
-    private var characterItems: [MovieCharacterListItem] = [
-        MovieCharacterListItem(name: "Rick Snaches"),
-        MovieCharacterListItem(name: "Rick Snaches"),
-        MovieCharacterListItem(name: "Rick Snaches"),
-        MovieCharacterListItem(name: "Rick Snaches"),
-        MovieCharacterListItem(name: "Rick Snaches"),
-        MovieCharacterListItem(name: "Rick Snaches"),
-        MovieCharacterListItem(name: "Rick Snaches"),
-        MovieCharacterListItem(name: "Rick Snaches"),
-        MovieCharacterListItem(name: "Rick Snaches"),
-        MovieCharacterListItem(name: "Rick Snaches"),
-        MovieCharacterListItem(name: "Rick Snaches")
+    private var characterItems: [CharacterListItem] = [
     ]
 }
 
 extension CharacterListCollectionViewManager: ManagesListCollectionView {
-    func setMovieCharacterList(with movieCharacterListItems: [MovieCharacterListItem]) {
+    func setCharacterList(with movieCharacterListItems: [CharacterListItem]) {
         self.characterItems = movieCharacterListItems
 
     }
@@ -59,7 +48,7 @@ extension CharacterListCollectionViewManager: UICollectionViewDataSource {
             fatalError("failed to deqeue cell")
         }
         let item = characterItems[indexPath.row]
-        cell.configure(name: item.name, image: item.image!)
+        cell.configureName(item.name)
         return cell
     }
 

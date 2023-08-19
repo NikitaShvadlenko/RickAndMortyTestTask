@@ -18,10 +18,8 @@ extension CharacterListPresenter: CharacterListViewOutput {
 
 // MARK: - CharacterListInteractorOutput
 extension CharacterListPresenter: CharacterListInteractorOutput {
-    func interactor(_ interactor: CharacterListInteractorInput, didFetchCharacterList list: [CharacterItem]) {
-        var movieCharacters: [MovieCharacterListItem] = []
-        list.forEach { movieCharacters.append(MovieCharacterListItem(name: $0.name))}
-        collectionViewManager?.setMovieCharacterList(with: movieCharacters)
+    func interactor(_ interactor: CharacterListInteractorInput, didFetchCharacterList list: [CharacterListItem]) {
+        collectionViewManager?.setCharacterList(with: list)
         self.view?.reloadCollection()
     }
 
