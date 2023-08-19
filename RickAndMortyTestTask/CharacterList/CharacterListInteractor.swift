@@ -13,7 +13,9 @@ extension CharacterListInteractor: CharacterListInteractorInput {
             do {
                 let result = try await apiClient.fetchCharacters()
                 print("Pages amount:", result.info.pages)
-                presenter?.interactor(self, didFetchCharacterList: result.results)
+                Task { @MainActor in
+                    presenter?.interactor(self, didFetchCharacterList: result.results)
+                }
             } catch {
                 print(error)
             }

@@ -19,6 +19,10 @@ final class CharacterListViewController: UIViewController {
 
 // MARK: - CharacterListViewInput
 extension CharacterListViewController: CharacterListViewInput {
+    func reloadCollection() {
+        characterListView.characterCollecitonView.reloadCollection()
+    }
+
     func setCollectionViewDelegate(_ delegate: UICollectionViewDelegate) {
         characterListView.characterCollecitonView.delegate = delegate
     }
