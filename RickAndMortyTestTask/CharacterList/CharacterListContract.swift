@@ -31,6 +31,7 @@ protocol CharacterListInteractorOutput: AnyObject {
 
 // sourcery: AutoMockable
 protocol CharacterListRouterInput {
+    func routeToDetailedCharacterView(characterID: Int)
 }
 
 protocol CharacterListRouterOutput: AnyObject {

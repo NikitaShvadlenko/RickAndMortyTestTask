@@ -1,4 +1,5 @@
 import UIKit
+import SwiftUI
 
 final class CharacterListRouter {
     weak var viewController: UIViewController?
@@ -7,6 +8,12 @@ final class CharacterListRouter {
 
 // MARK: - CharacterListRouterInput
 extension CharacterListRouter: CharacterListRouterInput {
+    func routeToDetailedCharacterView(characterID: Int) {
+        let characterDetailView = DetailedCharacterView(characterID: characterID)
+        let hostingController = UIHostingController(rootView: characterDetailView)
+        viewController?.navigationController?.pushViewController(hostingController, animated: true)
+
+    }
 }
 
 // MARK: - Private methods

@@ -64,8 +64,8 @@ extension CharacterListPresenter: CharacterListCollectionManagerDelegate {
         didSelectItemAt indexPath: IndexPath
     ) {
         guard let collectionViewManager else { return }
-        // will pass id to swiftUI view, so it can make the detailed request itself
-        print("Selected Item with id: \(collectionViewManager.characters[indexPath.item].id)")
+        let characterId = collectionViewManager.characters[indexPath.item].id
+        router?.routeToDetailedCharacterView(characterID: characterId)
     }
 
     func characterListCollectionManager(
