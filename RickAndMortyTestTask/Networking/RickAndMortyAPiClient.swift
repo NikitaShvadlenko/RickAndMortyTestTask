@@ -9,7 +9,7 @@
 import Foundation
 
 protocol RickAndMortyAPIClientProtocol {
-    func fetchCharacters() async throws -> CharactersListResponse
+    func fetchCharacters(for page: Int) async throws -> CharactersListResponse
 }
 
 final class RickAndMortyAPIClient {
@@ -30,9 +30,10 @@ final class RickAndMortyAPIClient {
 
 // MARK: - RickAndMortyAPIClientProtocol
 extension RickAndMortyAPIClient: RickAndMortyAPIClientProtocol {
-    func fetchCharacters() async throws -> CharactersListResponse {
+    func fetchCharacters(for page: Int) async throws -> CharactersListResponse {
         let url = try setRequestUrl(baseUrlString: baseURL, requestType: .characters)
-        let request = URLRequest(url: url)
+        var request = URLRequest(url: url)
+        request.allHTTPHeaderFields = ["page": "\(page)"]
         let (data, response) = try await session.data(for: request)
         guard let httpResonse = response as? HTTPURLResponse,
               httpResonse.statusCode == 200 else {

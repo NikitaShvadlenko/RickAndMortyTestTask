@@ -13,12 +13,16 @@ protocol CharacterListViewOutput {
 
 // sourcery: AutoMockable
 protocol CharacterListInteractorInput {
-    func fetchCharacterList()
+    func fetchCharacters(for page: Int)
 }
 
 // sourcery: AutoMockable
 protocol CharacterListInteractorOutput: AnyObject {
-    func interactor(_ interactor: CharacterListInteractorInput, didFetchCharacterList list: [CharacterListItem])
+   func interactor(
+        _ interactor: CharacterListInteractorInput,
+        didFetchCharacters result: Result<[CharacterListItem], Error>,
+        forPage page: Int
+    )
 }
 
 // sourcery: AutoMockable

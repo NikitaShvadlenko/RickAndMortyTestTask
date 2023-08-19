@@ -16,6 +16,7 @@ enum CharacterListAssembly {
         presenter.view = viewController
         presenter.interactor = interactor
         presenter.collectionViewManager = collectionViewManager
+        collectionViewManager.delegate = presenter
         presenter.router = router
 
         interactor.presenter = presenter

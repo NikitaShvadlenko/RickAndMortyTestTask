@@ -9,6 +9,8 @@
 import UIKit
 
 protocol ManagesListCollectionView {
+    var characters: [CharacterListItem] { get }
+    var delegate: CharacterListCollectionViewManagerDelegate? { get set }
     func setCharacterList(with movieCharacterListItems: [CharacterListItem])
 }
 
@@ -17,24 +19,28 @@ protocol CharacterListCollectionViewManagerDelegate: AnyObject {
         _ characterListCollectionViewManager: ManagesListCollectionView,
         didSelectItemAt indexPath: IndexPath
     )
+
+    func charactersListCollectionNeedsNextPage(
+        _ charactersListCollection: ManagesListCollectionView
+    )
 }
 
 class CharacterListCollectionViewManager: NSObject {
     weak var delegate: CharacterListCollectionViewManagerDelegate?
-    private var characterItems: [CharacterListItem] = [
-    ]
+    private(set) var characters: [CharacterListItem] = []
 }
 
 extension CharacterListCollectionViewManager: ManagesListCollectionView {
+
     func setCharacterList(with movieCharacterListItems: [CharacterListItem]) {
-        self.characterItems = movieCharacterListItems
+        characters = movieCharacterListItems
 
     }
 }
 
 extension CharacterListCollectionViewManager: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        characterItems.count
+        characters.count
     }
 
     func collectionView(
@@ -47,7 +53,7 @@ extension CharacterListCollectionViewManager: UICollectionViewDataSource {
         ) as? CharacterCell else {
             fatalError("failed to deqeue cell")
         }
-        let item = characterItems[indexPath.row]
+        let item = characters[indexPath.row]
         cell.configureName(item.name)
         return cell
     }
@@ -93,6 +99,12 @@ extension CharacterListCollectionViewManager: UICollectionViewDelegateFlowLayout
         minimumLineSpacingForSectionAt section: Int
     ) -> CGFloat {
         Constants.spaceBetweenCards
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.bounds.size.height) {
+            delegate?.charactersListCollectionNeedsNextPage(self)
+        }
     }
 }
 

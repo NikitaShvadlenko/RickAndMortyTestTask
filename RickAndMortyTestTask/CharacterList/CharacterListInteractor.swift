@@ -7,17 +7,16 @@ final class CharacterListInteractor {
 
 // MARK: - CharacterListInteractorInput
 extension CharacterListInteractor: CharacterListInteractorInput {
-    func fetchCharacterList() {
+    func fetchCharacters(for page: Int) {
         guard let apiClient = apiClient else { return }
         Task {
             do {
-                let result = try await apiClient.fetchCharacters()
-                print("Pages amount:", result.info.pages)
+                let result = try await apiClient.fetchCharacters(for: page)
                 Task { @MainActor in
-                    presenter?.interactor(self, didFetchCharacterList: result.results)
+                    presenter?.interactor(self, didFetchCharacters: .success(result.results), forPage: page)
                 }
             } catch {
-                print(error)
+                presenter?.interactor(self, didFetchCharacters: .failure(error), forPage: page)
             }
         }
     }

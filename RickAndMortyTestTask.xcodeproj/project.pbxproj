@@ -154,7 +154,7 @@
 			isa = PBXGroup;
 			children = (
 				B49ECEAF2A90A90400311276 /* CharactersListResponse.swift */,
-				B49ECEAD2A90556F00311276 /* CharactersResponse.swift */,
+				B49ECEA62A90283700311276 /* CharacterListItem.swift */,
 			);
 			path = CaractersListResponse;
 			sourceTree = "<group>";
@@ -163,7 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				B49ECEB32A90A97300311276 /* CharactersItem.swift */,
-				B49ECEA62A90283700311276 /* CharacterListItem.swift */,
+				B49ECEAD2A90556F00311276 /* CharactersResponse.swift */,
 			);
 			path = CharactersResponse;
 			sourceTree = "<group>";
