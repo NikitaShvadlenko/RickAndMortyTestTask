@@ -151,6 +151,10 @@ extension CharacterListCollectionViewManager: UICollectionViewDelegateFlowLayout
     ) {
         imageWaitingIndexPaths.remove(indexPath)
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        delegate?.characterListCollectionManager(self, didSelectItemAt: indexPath)
+    }
 }
 
 // MARK: - Private Methods

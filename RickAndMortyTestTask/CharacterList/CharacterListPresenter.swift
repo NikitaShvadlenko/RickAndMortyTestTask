@@ -63,14 +63,16 @@ extension CharacterListPresenter: CharacterListCollectionManagerDelegate {
         _ characterListCollectionManager: ManagesListCollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        print("Selected Item")
+        guard let collectionViewManager else { return }
+        // will pass id to swiftUI view, so it can make the detailed request itself
+        print("Selected Item with id: \(collectionViewManager.characters[indexPath.item].id)")
     }
 
     func characterListCollectionManager(
         _ characterListCollectionManager: ManagesListCollectionView,
         needsImageFor indexPath: IndexPath,
         completion: @escaping (Data) -> Void) {
-            guard let collectionViewManager = collectionViewManager else { return }
+            guard let collectionViewManager else { return }
             let url = collectionViewManager.characters[indexPath.item].image
             loadImageCompletions[url] = completion
             interactor?.fetchImage(url: url)

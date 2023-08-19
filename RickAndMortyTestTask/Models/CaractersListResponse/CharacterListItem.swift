@@ -12,4 +12,12 @@ struct CharacterListItem: Codable, Hashable {
     let identifier = UUID()
     let name: String
     let image: URL
+    // swiftlint:disable identifier_name
+    let id: Int
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case image
+        case id
+    }
 }
