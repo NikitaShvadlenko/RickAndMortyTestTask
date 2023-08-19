@@ -94,7 +94,10 @@ extension CharacterListCollectionViewManager: UICollectionViewDelegateFlowLayout
     ) -> CGFloat {
         Constants.spaceBetweenCards
     }
+}
 
+// MARK: - Constants
+extension CharacterListCollectionViewManager {
     private enum Constants {
         static let numberOfHorizontalCards: CGFloat = 2
         static let spaceBetweenCards: CGFloat = 16
