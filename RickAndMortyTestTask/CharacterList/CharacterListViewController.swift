@@ -16,6 +16,16 @@ final class CharacterListViewController: UIViewController {
         presenter?.viewDidLoad(self)
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        title = L10n.characters
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        title = ""
+        navigationController?.navigationBar.prefersLargeTitles = false
+    }
+
     func setCollectionViewManager(_ manager: ManagesListCollectionView) {
         manager.setCollectionView(characterListView.collectionView)
         characterListView.collectionView.dataSource = manager.dataSource
@@ -33,9 +43,7 @@ extension CharacterListViewController: CharacterListViewInput {
 extension CharacterListViewController {
     private func setupNavigationBar() {
 let navigaitonBarAppearence = UINavigationBarAppearance()
-        title = L10n.characters
         navigaitonBarAppearence.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Asset.white.color]
-        navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.standardAppearance = navigaitonBarAppearence
     }
 }

@@ -11,6 +11,7 @@ extension CharacterListRouter: CharacterListRouterInput {
     func routeToDetailedCharacterView(characterID: Int) {
         let characterDetailView = DetailCharacterAssembly.assemble(characterID: characterID)
         let hostingController = UIHostingController(rootView: characterDetailView)
+        hostingController.navigationItem.hidesBackButton = true
         viewController?.navigationController?.pushViewController(hostingController, animated: true)
     }
 }
