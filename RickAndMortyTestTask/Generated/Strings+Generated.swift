@@ -14,6 +14,8 @@ internal enum L10n {
   internal static let characters = L10n.tr("Localizable", "characters", fallback: "Characters")
   /// Gender:
   internal static let gender = L10n.tr("Localizable", "gender", fallback: "Gender:")
+  /// Planet
+  internal static let planet = L10n.tr("Localizable", "planet", fallback: "Planet")
   /// Species:
   internal static let species = L10n.tr("Localizable", "species", fallback: "Species:")
   /// Type:

@@ -12,11 +12,6 @@ struct DetailedCharacterView: View {
     let characterID: Int
 
     var body: some View {
-        NavigationView {
-            Color(asset: Asset.backgroundColor)
-                .ignoresSafeArea()
-        }
-        .navigationBarBackButtonHidden(true)
     }
 }
 

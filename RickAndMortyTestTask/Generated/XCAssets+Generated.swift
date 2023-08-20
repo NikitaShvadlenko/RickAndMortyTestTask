@@ -26,8 +26,10 @@ internal typealias AssetImageTypeAlias = ImageAsset.Image
 internal enum Asset {
   internal static let backgroundColor = ColorAsset(name: "backgroundColor")
   internal static let blackCard = ColorAsset(name: "blackCard")
+  internal static let blackElement = ColorAsset(name: "blackElement")
   internal static let grayNormal = ColorAsset(name: "grayNormal")
   internal static let launchScreen = ImageAsset(name: "launchScreen")
+  internal static let planet = ImageAsset(name: "planet")
   internal static let primary = ColorAsset(name: "primary")
   internal static let white = ColorAsset(name: "white")
 }
