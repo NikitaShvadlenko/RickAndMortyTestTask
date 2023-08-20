@@ -69,7 +69,12 @@ extension DetailedCharacterViewModel {
             do {
                 let result = try await networkClient.fetchEpisodes(from: episodesUrl)
                 Task { @MainActor in
-                    self.episodes = result
+                    let formattedEpisodes = convertEpisodesData(
+                        episodes: result.sorted(
+                            by: {$0.identificator < $1.identificator}
+                        )
+                    )
+                    self.episodes = formattedEpisodes
                 }
             } catch {
                 print(error)
@@ -89,5 +94,36 @@ extension DetailedCharacterViewModel {
                 print(error)
             }
         }
+    }
+
+    private func convertEpisodesData(episodes: [Episode]) -> [Episode] {
+        let pattern = #"S(\d+)E(\d+)"#
+        var formattedEpisodes: [Episode] = []
+        for episode in episodes {
+            let input = episode.episode
+            if let regex = try? NSRegularExpression(pattern: pattern, options: []) {
+                let range = NSRange(input.startIndex..<input.endIndex, in: input)
+                if let match = regex.firstMatch(in: input, options: [], range: range) {
+                   guard
+                    let seasonRange = Range(match.range(at: 1), in: input),
+                    let episodeRange = Range(match.range(at: 2), in: input)
+                    else {
+                       return formattedEpisodes
+                   }
+                    let seasonNumber = String(input[seasonRange]).trimmingPrefix(while: { $0 == "0" })
+                    let episodeNumber = String(input[episodeRange]).trimmingPrefix(while: { $0 == "0" })
+
+                    formattedEpisodes.append(
+                        Episode(
+                            name: episode.name,
+                            airDate: episode.airDate,
+                            episode: "\(L10n.episode): \(episodeNumber), \(L10n.season): \(seasonNumber)",
+                            identificator: episode.identificator
+                        )
+                    )
+                }
+            }
+        }
+        return formattedEpisodes
     }
 }

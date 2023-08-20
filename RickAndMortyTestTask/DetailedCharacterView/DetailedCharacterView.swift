@@ -71,7 +71,7 @@ struct DetailedCharacterView: View {
             .scrollContentBackground(.hidden)
             .background(Color(asset: Asset.backgroundColor))
         }
-        .navigationBarBackButtonHidden(true) // Hide default back button
+        .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button {

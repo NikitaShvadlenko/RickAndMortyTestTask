@@ -12,10 +12,12 @@ struct Episode: Codable, Hashable {
     let name: String
     let airDate: String
     let episode: String
+    let identificator: Int
 
     enum CodingKeys: String, CodingKey {
         case name
         case airDate = "air_date"
         case episode
+        case identificator = "id"
     }
 }
