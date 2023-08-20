@@ -3,4 +3,7 @@
 "type" = "Type:";
 "gender" = "Gender:";
 "planet" = "Planet";
+"info" = "Info";
+"origin" = "Origin";
+"Episodes" = "Episodes";
 

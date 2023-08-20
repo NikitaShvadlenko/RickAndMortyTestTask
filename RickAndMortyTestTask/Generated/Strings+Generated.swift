@@ -12,8 +12,14 @@ import Foundation
 internal enum L10n {
   /// Characters
   internal static let characters = L10n.tr("Localizable", "characters", fallback: "Characters")
+  /// Episodes
+  internal static let episodes = L10n.tr("Localizable", "Episodes", fallback: "Episodes")
   /// Gender:
   internal static let gender = L10n.tr("Localizable", "gender", fallback: "Gender:")
+  /// Info
+  internal static let info = L10n.tr("Localizable", "info", fallback: "Info")
+  /// Origin
+  internal static let origin = L10n.tr("Localizable", "origin", fallback: "Origin")
   /// Planet
   internal static let planet = L10n.tr("Localizable", "planet", fallback: "Planet")
   /// Species:
