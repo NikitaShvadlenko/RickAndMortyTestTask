@@ -1,5 +1,5 @@
 import UIKit
-// sourcery: AutoMockable
+
 protocol CharacterListViewInput: AnyObject {
     func configureViews()
     func displayLoadingOverlay()
@@ -10,13 +10,12 @@ protocol CharacterListViewOutput {
     func viewDidLoad(_ view: CharacterListViewInput)
 }
 
-// sourcery: AutoMockable
 protocol CharacterListInteractorInput {
     func fetchCharacters(for page: Int)
     func fetchImage(url: URL)
 }
 
-// sourcery: AutoMockable
+
 protocol CharacterListInteractorOutput: AnyObject {
     func interactor(
         _ interactor: CharacterListInteractorInput,
@@ -31,7 +30,6 @@ protocol CharacterListInteractorOutput: AnyObject {
     )
 }
 
-// sourcery: AutoMockable
 protocol CharacterListRouterInput {
     func routeToDetailedCharacterView(characterID: Int)
 }
