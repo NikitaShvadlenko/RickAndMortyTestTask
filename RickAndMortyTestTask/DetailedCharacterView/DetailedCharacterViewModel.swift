@@ -12,6 +12,7 @@ final class DetailedCharacterViewModel: ObservableObject {
     private let characterId: Int
     private let networkClient: ManagesDetailCharacterRequests
     private let imageDownloader: ImageDownloaderProtocol
+    @Published var isLoading = false
     @Published var origin: Origin?
     @Published var episodes: [Episode]?
     @Published var imageData: Data?
@@ -34,14 +35,18 @@ final class DetailedCharacterViewModel: ObservableObject {
 // MARK: - Private Methods
 extension DetailedCharacterViewModel {
     private func setGeneralInformation() {
+        isLoading = true
         Task {
             do {
                 let result = try await networkClient.fetchCharacter(characterId: characterId)
                 Task { @MainActor in
                     self.generaInformation = result
+                    isLoading = false
                 }
             } catch {
-                print(error)
+                Task { @MainActor in
+                    isLoading = false
+                }
             }
         }
     }
@@ -55,7 +60,8 @@ extension DetailedCharacterViewModel {
             do {
                 let result = try await networkClient.fetchOrigin(from: url)
                 Task { @MainActor in
-                    self.origin = result
+                    let origin = formatOrigin(result)
+                    self.origin = origin
                 }
             } catch {
                 print(error)
@@ -125,5 +131,15 @@ extension DetailedCharacterViewModel {
             }
         }
         return formattedEpisodes
+    }
+
+    // Task requires not to have any dimensions in parenthesis
+    private func formatOrigin(_ origin: Origin) -> Origin {
+        var modifiedOrigin = origin
+        if let indexOfParenthesis = origin.name.firstIndex(of: "(") {
+            let truncatedName = String(origin.name[..<indexOfParenthesis])
+            modifiedOrigin = Origin(name: truncatedName, type: origin.type)
+        }
+        return modifiedOrigin
     }
 }

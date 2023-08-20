@@ -19,6 +19,7 @@ struct DetailedCharacterView: View {
                     MainInfo(viewModel: viewModel)
                 }
                 .listRowInsets(EdgeInsets())
+
                 Section(
                     header:
                         Text(L10n.info)
@@ -42,7 +43,6 @@ struct DetailedCharacterView: View {
                     )
                     .listRowInsets(EdgeInsets())
                     .background(Color.clear)
-
                 }
 
                 Section(
@@ -68,6 +68,15 @@ struct DetailedCharacterView: View {
                     Text(L10n.episodes)
                 }
             }
+            .overlay {
+                if viewModel.isLoading {
+                    Color.black.opacity(0.5)
+                        .edgesIgnoringSafeArea(.all)
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                        .scaleEffect(2.0, anchor: .center)
+                }
+            }
             .scrollContentBackground(.hidden)
             .background(Color(asset: Asset.backgroundColor))
         }
@@ -79,7 +88,6 @@ struct DetailedCharacterView: View {
                 } label: {
                     Image(systemName: SFSymbol.backSymbol.rawValue)
                         .foregroundColor(Color(asset: Asset.white))
-
                 }
             }
         }
