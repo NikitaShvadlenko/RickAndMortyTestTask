@@ -18,7 +18,8 @@
 * Episodes are formatted
 
 ## Other notes:
-* Normally, I use swiftGen to generate Constants and Assets. I usually don't include generated files (including .xcodeproj) into my repositories.
+* Normally, I use swiftGen to generate Constants and Assets. 
+* I usually use xcodegen to generate Xcode project from a yml file, which calls a swiftgen script. This way I get new generated assets and .xcodeproj file
 * To make it easy to check the project, I included the files mentioned above.
 * My preference is to use SnapKit when working with UIKit layouts.
 
