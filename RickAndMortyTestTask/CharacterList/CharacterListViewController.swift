@@ -24,7 +24,6 @@ final class CharacterListViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         title = ""
         navigationController?.navigationBar.prefersLargeTitles = false
-        navigationItem.largeTitleDisplayMode = .always
     }
 
     func setCollectionViewManager(_ manager: ManagesListCollectionView) {
@@ -51,8 +50,10 @@ extension CharacterListViewController: CharacterListViewInput {
 // MARK: - Private methods
 extension CharacterListViewController {
     private func setupNavigationBar() {
-let navigaitonBarAppearence = UINavigationBarAppearance()
+        let navigaitonBarAppearence = UINavigationBarAppearance()
         navigaitonBarAppearence.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: Asset.white.color]
+        navigaitonBarAppearence.titleTextAttributes = [NSAttributedString.Key.foregroundColor: Asset.white.color]
+        navigaitonBarAppearence.backgroundColor = UIColor(asset: Asset.backgroundColor)
         navigationController?.navigationBar.standardAppearance = navigaitonBarAppearence
     }
 }
