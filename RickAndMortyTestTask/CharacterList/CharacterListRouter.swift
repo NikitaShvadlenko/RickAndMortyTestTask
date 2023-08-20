@@ -9,7 +9,7 @@ final class CharacterListRouter {
 // MARK: - CharacterListRouterInput
 extension CharacterListRouter: CharacterListRouterInput {
     func routeToDetailedCharacterView(characterID: Int) {
-        let characterDetailView = DetailedCharacterView(characterID: characterID)
+        let characterDetailView = DetailCharacterAssembly.assemble(characterID: characterID)
         let hostingController = UIHostingController(rootView: characterDetailView)
         viewController?.navigationController?.pushViewController(hostingController, animated: true)
     }

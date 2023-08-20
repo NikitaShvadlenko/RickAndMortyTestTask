@@ -9,7 +9,9 @@
 import SwiftUI
 
 struct DetailedCharacterView: View {
-    let characterID: Int
+    // TODO: Instead of using list, use ordinary scrollView
+
+    let viewModel: ManagesDetailCharacterView
 
     var body: some View {
         List {
@@ -19,9 +21,9 @@ struct DetailedCharacterView: View {
             .listRowInsets(EdgeInsets())
             Section(
                 header:
-                Text("Info")
-                .titleStyle()
-                .padding(.bottom, 16)
+                    Text("Info")
+                    .titleStyle()
+                    .padding(.bottom, 16)
             ) {
                 InfoCell(infoItems: [
                     InfoCellItem(questionText: "cdwdfwe", answerText: "dwedfwe"),
@@ -30,16 +32,25 @@ struct DetailedCharacterView: View {
                 ])
                 .listRowInsets(EdgeInsets())
                 .background(Color.clear)
+
             }
 
             Section(
-                header: Text("Origin")
+                header:
+                    Text("Origin")
                     .titleStyle()
                     .padding(.bottom, 16)
+
             ) {
                 PlanetCell(planetName: "Earth")
-                .listRowInsets(EdgeInsets())
-                .background(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                    .background(Color.clear)
+            }
+
+            Section {
+                EpisodeCell(episodeName: "dwed", airDate: "12332", episode: "dwfew")
+            } header: {
+                Text("Episodes")
             }
         }
         .scrollContentBackground(.hidden)
@@ -47,11 +58,11 @@ struct DetailedCharacterView: View {
     }
 }
 
-struct DetailedCharacterView_Previews: PreviewProvider {
-    static var previews: some View {
-        DetailedCharacterView(characterID: 2)
-    }
-}
+//struct DetailedCharacterView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DetailedCharacterView(viewModel: DetailedCharacterView(viewModel: DetailedCharacterViewModel()) )
+//    }
+//}
 
 struct MainInfo: View {
     var body: some View {
