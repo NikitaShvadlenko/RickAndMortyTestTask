@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -151,7 +151,6 @@
 				9933CB70901EA73BDC620BA4 /* DetailCharacterAssembly.swift */,
 				F310E6D43B555071024A1FCE /* DetailedCharacterView.swift */,
 				E0ABCD3C939FE62357DE5EA6 /* DetailedCharacterViewModel.swift */,
-				5EF82612DEC7C41EAF731F8E /* Models */,
 				5A948C46A7F525E75B04257F /* Views */,
 			);
 			path = DetailedCharacterView;
@@ -160,6 +159,7 @@
 		5A948C46A7F525E75B04257F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5EF82612DEC7C41EAF731F8E /* Models */,
 				C2958020FBE6C574678A794C /* EpisodeCellStyle.swift */,
 				EB1E7DB1C4A8B77148046105 /* Cells */,
 				A94CE1CB7F23772FBD6BDB9A /* TextModifiers */,
