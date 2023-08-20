@@ -8,14 +8,14 @@
 
 import UIKit
 
-enum Section {
+enum CollecitonViewSection {
     case main
 }
 
 protocol ManagesListCollectionView: UICollectionViewDelegate {
     var characters: [CharacterListItem] { get }
     var delegate: CharacterListCollectionManagerDelegate? { get set }
-    var dataSource: UICollectionViewDiffableDataSource<Section, CharacterListItem> { get }
+    var dataSource: UICollectionViewDiffableDataSource<CollecitonViewSection, CharacterListItem> { get }
     func setCharacterList(with movieCharacterListItems: [CharacterListItem])
     func setCollectionView(_ collectionView: UICollectionView)
 }
@@ -47,7 +47,7 @@ final class CharacterListCollectionViewManager: NSObject {
     private var imageWaitingIndexPaths = Set<IndexPath>()
 
     weak var collecitonView: UICollectionView?
-    lazy var dataSource: UICollectionViewDiffableDataSource<Section, CharacterListItem> = {
+    lazy var dataSource: UICollectionViewDiffableDataSource<CollecitonViewSection, CharacterListItem> = {
         guard let collectionView = self.collecitonView else {
             fatalError("CollectionView was not set")
         }
@@ -57,7 +57,7 @@ final class CharacterListCollectionViewManager: NSObject {
                 cell.configureName(item.name)
             }
 
-        return UICollectionViewDiffableDataSource<Section, CharacterListItem>(
+        return UICollectionViewDiffableDataSource<CollecitonViewSection, CharacterListItem>(
             collectionView: collectionView
             // swiftlint:disable line_length
         ) { (collectionView: UICollectionView, indexPath: IndexPath, identifier: CharacterListItem) -> UICollectionViewCell? in
@@ -160,8 +160,8 @@ extension CharacterListCollectionViewManager: UICollectionViewDelegateFlowLayout
 // MARK: - Private Methods
 extension CharacterListCollectionViewManager {
     private func configureSnapshot() {
-        let section = Section.main
-        var snapshot = NSDiffableDataSourceSnapshot<Section, CharacterListItem>()
+        let section = CollecitonViewSection.main
+        var snapshot = NSDiffableDataSourceSnapshot<CollecitonViewSection, CharacterListItem>()
         snapshot.appendSections([section])
         snapshot.appendItems(characters)
         dataSource.apply(snapshot, animatingDifferences: false)

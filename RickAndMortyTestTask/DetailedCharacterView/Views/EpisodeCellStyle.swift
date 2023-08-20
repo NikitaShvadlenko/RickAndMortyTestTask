@@ -14,7 +14,6 @@ struct CellModifier: ViewModifier {
             .fixedSize(horizontal: false, vertical: true)
             .background(Color(asset: Asset.blackCard))
             .cornerRadius(16)
-            .padding()
     }
 }
 
