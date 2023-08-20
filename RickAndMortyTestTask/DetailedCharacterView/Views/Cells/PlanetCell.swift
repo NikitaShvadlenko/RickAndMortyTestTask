@@ -26,20 +26,15 @@ struct PlanetCell: View {
 
             VStack(alignment: .leading) {
                 Text(planetName)
-                    .font(.system(size: 17, weight: .bold))
-                    .foregroundColor(Color(asset: Asset.white))
+                    .titleStyle()
                 Spacer()
                 Text(L10n.planet)
-                    .font(.system(size: 13))
-                    .foregroundColor(Color(asset: Asset.primary))
+                    .bodyStyle()
             }
             .padding([.leading, .top, .bottom], 16)
             Spacer()
         }
-        .fixedSize(horizontal: false, vertical: true)
-        .background(Color(asset: Asset.blackCard))
-        .cornerRadius(16)
-        .padding()
+        .cellStyle()
     }
 }
 

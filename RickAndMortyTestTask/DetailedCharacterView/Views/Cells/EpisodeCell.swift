@@ -17,12 +17,10 @@ struct EpisodeCell: View {
         HStack {
             VStack(alignment: .leading, spacing: 16) {
                 Text(episodeName)
-                    .font(.system(size: 17, weight: .semibold))
-                    .foregroundColor(Color(asset: Asset.white))
+                    .titleStyle()
                     .padding(.top, 16)
                 Text(episode)
-                    .font(.system(size: 13))
-                    .foregroundColor(Color(asset: Asset.primary))
+                    .bodyStyle()
             }
             .padding(.leading, 15.25)
             Spacer()
@@ -35,10 +33,7 @@ struct EpisodeCell: View {
             .padding(.trailing, 15.68)
         }
         .padding(.bottom, 14)
-        .fixedSize(horizontal: false, vertical: true)
-        .background(Color(asset: Asset.blackCard))
-        .cornerRadius(16)
-        .padding()
+        .cellStyle()
     }
 }
 

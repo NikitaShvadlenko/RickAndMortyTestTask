@@ -14,13 +14,11 @@ struct InfoCell: View {
     var body: some View {
         VStack(spacing: 16) {
             ForEach(infoItems, id: \.questionText) { item in
-                ExtractedView(infoItem: item)
+                FormView(infoItem: item)
             }
         }
         .padding(16)
-        .background(Color(asset: Asset.blackCard))
-        .cornerRadius(16)
-        .padding()
+        .cellStyle()
     }
 }
 
@@ -34,43 +32,18 @@ struct InfoCell_Previews: PreviewProvider {
     }
 }
 
-// MARK: - Extensions
-struct GeneralField: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .font(.system(size: 16))
-            .foregroundColor(Color(asset: Asset.grayNormal))
-    }
-}
-
-struct GeneralFieldAnswer: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .font(.system(size: 16))
-            .foregroundColor(Color(asset: Asset.white))
-    }
-}
-
-extension View {
-    func generalFieldStyle() -> some View {
-        modifier(GeneralField())
-    }
-
-    func generalFieldAnswerStyle() -> some View {
-        modifier(GeneralFieldAnswer())
-    }
-}
-
-struct ExtractedView: View {
+struct FormView: View {
     var infoItem: InfoCellItem
 
     var body: some View {
         HStack {
             Text(infoItem.questionText)
-                .generalFieldStyle()
+                .font(.system(size: 16))
+                .foregroundColor(Color(asset: Asset.grayNormal))
             Spacer()
             Text(infoItem.answerText)
-                .generalFieldAnswerStyle()
+                .font(.system(size: 16))
+                .foregroundColor(Color(asset: Asset.white))
         }
     }
 }
