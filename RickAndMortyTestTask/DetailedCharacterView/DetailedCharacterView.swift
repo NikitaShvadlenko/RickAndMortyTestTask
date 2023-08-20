@@ -48,7 +48,12 @@ struct DetailedCharacterView: View {
             }
 
             Section {
-                EpisodeCell(episodeName: "dwed", airDate: "12332", episode: "dwfew")
+                ForEach(viewModel.episodes ?? [], id: \.self) { episode in
+                    EpisodeCell(episodeName: episode.name, airDate: episode.airDate, episode: episode.episode)
+                        .padding(.bottom, 16)
+                }
+                .listRowInsets(EdgeInsets())
+                .background(Color(asset: Asset.backgroundColor))
             } header: {
                 Text("Episodes")
             }

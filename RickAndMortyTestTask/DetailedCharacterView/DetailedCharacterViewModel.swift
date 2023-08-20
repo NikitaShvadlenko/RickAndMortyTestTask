@@ -47,7 +47,6 @@ extension DetailedCharacterViewModel {
     }
 
     private func fetchOrigin() {
-
         guard let url = generaInformation?.origin.url else {
             self.origin = Origin(name: generaInformation?.origin.name ?? "", type: "")
             return
