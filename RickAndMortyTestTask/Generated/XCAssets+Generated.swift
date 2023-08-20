@@ -31,6 +31,7 @@ internal enum Asset {
   internal static let launchScreen = ImageAsset(name: "launchScreen")
   internal static let planet = ImageAsset(name: "planet")
   internal static let primary = ColorAsset(name: "primary")
+  internal static let secondaryText = ColorAsset(name: "secondaryText")
   internal static let white = ColorAsset(name: "white")
 }
 // swiftlint:enable identifier_name line_length nesting type_body_length type_name

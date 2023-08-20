@@ -12,6 +12,8 @@ struct DetailedCharacterView: View {
     let characterID: Int
 
     var body: some View {
+        HStack {
+        }
     }
 }
 
