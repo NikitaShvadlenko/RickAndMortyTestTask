@@ -11,7 +11,7 @@ import SwiftUI
 enum DetailCharacterAssembly {
     static func assemble(characterID: Int) -> some View {
         let networkClient = RickAndMortyAPIClient()
-        let viewModel = DetailedCharacterViewModel(networkClient: networkClient)
+        let viewModel = DetailedCharacterViewModel(networkClient: networkClient, characterId: characterID)
         let view = DetailedCharacterView(viewModel: viewModel)
         return view
     }

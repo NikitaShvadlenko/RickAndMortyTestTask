@@ -13,10 +13,45 @@ protocol ManagesDetailCharacterView {
 }
 
 final class DetailedCharacterViewModel: ManagesDetailCharacterView {
+    var characterId: Int
     var networkClient: ManagesDetailCharacterRequests
-    var generaInformation: CharacterItem?
+    var generaInformation: CharacterItem? {
+        didSet {
 
-    init(networkClient: ManagesDetailCharacterRequests) {
+        }
+    }
+
+    init(networkClient: ManagesDetailCharacterRequests, characterId: Int) {
         self.networkClient = networkClient
+        self.characterId = characterId
+    }
+}
+
+// MARK: - Private Methods
+extension DetailedCharacterViewModel {
+    private func setGeneralInformation() {
+        Task {
+            do {
+                let result = try await networkClient.fetchCharacter(characterId: characterId)
+                Task { @MainActor in
+                    self.generaInformation = result
+                }
+            } catch {
+                print(error)
+            }
+        }
+    }
+
+    private func fetchOrigin() {
+        Task {
+            do {
+                let result = try await networkClient.fetchCharacter(characterId: characterId)
+                Task { @MainActor in
+                    self.generaInformation = result
+                }
+            } catch {
+                print(error)
+            }
+        }
     }
 }

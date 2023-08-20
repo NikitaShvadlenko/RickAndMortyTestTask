@@ -16,6 +16,7 @@ protocol RickAndMortyAPIClientProtocol {
 protocol ManagesDetailCharacterRequests {
     func fetchEpisodes(from urls: [URL]) async throws -> [Episode]
     func fetchOrigin(from url: URL) -> Origin
+    func fetchCharacter(characterId: Int) async throws -> CharacterItem
 }
 
 final class RickAndMortyAPIClient {
@@ -26,7 +27,7 @@ final class RickAndMortyAPIClient {
 
     private let session: URLSession
     private let sessionConfiguration: URLSessionConfiguration
-    private var baseURL = "https://rickandmortyapi.com/api"
+    private var baseURL = "https://rickandmortyapi.com"
 
     init() {
         self.sessionConfiguration = URLSessionConfiguration.default
@@ -93,6 +94,17 @@ extension RickAndMortyAPIClient: ManagesDetailCharacterRequests {
     func fetchOrigin(from url: URL) -> Origin {
         return Origin(name: "Earth", type: "Planet")
     }
+
+    func fetchCharacter(characterId: Int) async throws -> CharacterItem {
+        var url = try setRequestUrl(baseUrlString: baseURL, requestType: .character(identificator: characterId))
+        let (data, response) = try await session.data(from: url)
+        guard let httpResonse = response as? HTTPURLResponse,
+              httpResonse.statusCode == 200 else {
+            throw RickAndMortyApiError.invalidResponse
+        }
+        let character = try JSONDecoder().decode(CharacterItem.self, from: data)
+        return character
+    }
 }
 
 // MARK: - Private methods
@@ -101,7 +113,7 @@ extension RickAndMortyAPIClient {
         guard var url = URL(string: baseUrlString) else {
             throw RickAndMortyApiError.failedToCreateURL
         }
-        url.append(path: requestType.rawValue)
+        url.append(path: requestType.path)
         return url
     }
 
@@ -113,10 +125,24 @@ extension RickAndMortyAPIClient {
 }
 
 extension RickAndMortyAPIClient {
-    private enum RickAndMortyApiRequestType: String {
-        // we only need characters in this test
-        case locations = "location"
-        case characters = "character"
-        case episodes = "episode"
+    private enum RickAndMortyApiRequestType {
+        case locations
+        case characters
+        case episodes
+        case character(identificator: Int)
+
+        var path: String {
+            switch self {
+            case .locations:
+                return "api/location"
+            case .characters:
+                return "api/character"
+            case .episodes:
+                return "api/episode"
+            case .character(let identificator):
+                return "api/character/\(identificator)"
+            }
+        }
     }
+
 }
