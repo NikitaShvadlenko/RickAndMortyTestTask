@@ -41,9 +41,9 @@ struct DetailedCharacterView: View {
                         )
                     ]
                     )
-                    .listRowInsets(EdgeInsets())
-                    .background(Color.clear)
                 }
+                .listRowInsets(EdgeInsets())
+                .background(Color(asset: Asset.backgroundColor))
 
                 Section(
                     header:
@@ -56,6 +56,8 @@ struct DetailedCharacterView: View {
                         .listRowInsets(EdgeInsets())
                         .background(Color.clear)
                 }
+                .listRowInsets(EdgeInsets())
+                .background(Color(asset: Asset.backgroundColor))
 
                 Section {
                     ForEach(viewModel.episodes ?? [], id: \.self) { episode in
@@ -64,8 +66,11 @@ struct DetailedCharacterView: View {
                     }
                     .listRowInsets(EdgeInsets())
                     .background(Color(asset: Asset.backgroundColor))
-                } header: {
+                }
+                header: {
                     Text(L10n.episodes)
+                        .titleStyle()
+                        .padding(.bottom, 16)
                 }
             }
             .overlay {

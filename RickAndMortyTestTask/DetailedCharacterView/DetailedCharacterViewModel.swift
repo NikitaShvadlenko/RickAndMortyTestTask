@@ -12,6 +12,7 @@ final class DetailedCharacterViewModel: ObservableObject {
     private let characterId: Int
     private let networkClient: ManagesDetailCharacterRequests
     private let imageDownloader: ImageDownloaderProtocol
+
     @Published var isLoading = false
     @Published var origin: Origin?
     @Published var episodes: [Episode]?
