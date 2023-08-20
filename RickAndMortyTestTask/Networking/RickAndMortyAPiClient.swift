@@ -26,6 +26,7 @@ final class RickAndMortyAPIClient {
     enum RickAndMortyApiError: Error {
         case failedToCreateURL
         case invalidResponse
+        case failedToDecodeJson
     }
 
     private let session: URLSession
@@ -41,11 +42,7 @@ final class RickAndMortyAPIClient {
 // MARK: - ImageDownloaderProtocol
 extension RickAndMortyAPIClient: ImageDownloaderProtocol {
     func fetchImage(from url: URL) async throws -> Data {
-        let (data, response) = try await session.data(from: url)
-        guard let httpResonse = response as? HTTPURLResponse,
-              httpResonse.statusCode == 200 else {
-            throw RickAndMortyApiError.invalidResponse
-        }
+        let data = try await fetchDataFromUrl(from: url, nil)
         return data
     }
 }
@@ -53,15 +50,12 @@ extension RickAndMortyAPIClient: ImageDownloaderProtocol {
 // MARK: - RickAndMortyAPIClientProtocol
 extension RickAndMortyAPIClient: RickAndMortyAPIClientProtocol {
     func fetchCharacters(for page: Int) async throws -> CharactersListResponse {
-        var url = try setRequestUrl(baseUrlString: baseURL, requestType: .characters)
+        let url = try setRequestUrl(baseUrlString: baseURL, requestType: .characters)
         let queryItem = URLQueryItem(name: "page", value: "\(page)")
-        url.append(queryItems: [queryItem])
-        let (data, response) = try await session.data(from: url)
-        guard let httpResonse = response as? HTTPURLResponse,
-              httpResonse.statusCode == 200 else {
-            throw RickAndMortyApiError.invalidResponse
+        let data = try await fetchDataFromUrl(from: url, [queryItem])
+        guard let characterList = decodeDataFrom(element: CharactersListResponse.self, data: data) else {
+            throw RickAndMortyApiError.failedToDecodeJson
         }
-         let characterList = try JSONDecoder().decode(CharactersListResponse.self, from: data)
         return characterList
     }
 }
@@ -69,17 +63,15 @@ extension RickAndMortyAPIClient: RickAndMortyAPIClientProtocol {
 extension RickAndMortyAPIClient: ManagesDetailCharacterRequests {
     func fetchEpisodes(from urls: [URL]) async throws -> [Episode] {
         var episodes: [Episode] = []
-        await withTaskGroup(of: Episode?.self) { group in
+        await withTaskGroup(of: Episode?.self) { [weak self] group in
+            guard let self else { return }
             for url in urls {
                 group.addTask {
                     do {
-                        let (data, response) = try await self.session.data(from: url)
-                        guard let httpResonse = response as? HTTPURLResponse,
-                              httpResonse.statusCode == 200 else {
-                            print("invalid response")
+                        let data = try await self.fetchDataFromUrl(from: url, nil)
+                        guard let episode = self.decodeDataFrom(element: Episode.self, data: data) else {
                             return nil
                         }
-                        let episode = try JSONDecoder().decode(Episode.self, from: data)
                         return episode
                     } catch {
                         print("Error fetching or parsing episode from \(url): \(error)")
@@ -98,23 +90,19 @@ extension RickAndMortyAPIClient: ManagesDetailCharacterRequests {
     }
 
     func fetchOrigin(from url: URL) async throws  -> Origin {
-        let (data, response) = try await session.data(from: url)
-        guard let httpResonse = response as? HTTPURLResponse,
-              httpResonse.statusCode == 200 else {
-            throw RickAndMortyApiError.invalidResponse
+        let data = try await fetchDataFromUrl(from: url, nil)
+        guard let origin = decodeDataFrom(element: Origin.self, data: data) else {
+            throw RickAndMortyApiError.failedToDecodeJson
         }
-        let origin = try JSONDecoder().decode(Origin.self, from: data)
         return origin
     }
 
     func fetchCharacter(characterId: Int) async throws -> CharacterItem {
-        var url = try setRequestUrl(baseUrlString: baseURL, requestType: .character(identificator: characterId))
-        let (data, response) = try await session.data(from: url)
-        guard let httpResonse = response as? HTTPURLResponse,
-              httpResonse.statusCode == 200 else {
-            throw RickAndMortyApiError.invalidResponse
+        let url = try setRequestUrl(baseUrlString: baseURL, requestType: .character(identificator: characterId))
+        let data = try await fetchDataFromUrl(from: url, nil)
+        guard let character = decodeDataFrom(element: CharacterItem.self, data: data) else {
+            throw RickAndMortyApiError.failedToDecodeJson
         }
-        let character = try JSONDecoder().decode(CharacterItem.self, from: data)
         return character
     }
 }
@@ -129,13 +117,37 @@ extension RickAndMortyAPIClient {
         return url
     }
 
-    func fetchEpisodes(from url: URL) async throws -> [Episode] {
+    private func fetchEpisodes(from url: URL) async throws -> [Episode] {
         let (data, _) = try await URLSession.shared.data(from: url)
-        let decoder = JSONDecoder()
-        return try decoder.decode([Episode].self, from: data)
+        guard let result = decodeDataFrom(element: [Episode].self, data: data) else {
+            throw RickAndMortyApiError.failedToDecodeJson
+        }
+        return result
+    }
+
+    private func fetchDataFromUrl(from url: URL, _ queryItems: [URLQueryItem]?) async throws -> Data {
+        var url = url
+        if let queryItems = queryItems {
+             url = url.appending(queryItems: queryItems)
+        }
+        let (data, response) = try await session.data(from: url)
+        guard let httpResonse = response as? HTTPURLResponse,
+              httpResonse.statusCode == 200 else {
+            throw RickAndMortyApiError.invalidResponse
+        }
+        return data
+    }
+
+    private func decodeDataFrom<T: Decodable>(element: T.Type, data: Data) -> T? {
+        do {
+            let result = try JSONDecoder().decode(T.self, from: data)
+            return result
+        } catch {
+            print(error)
+            return nil
+        }
     }
 }
-
 extension RickAndMortyAPIClient {
     private enum RickAndMortyApiRequestType {
         case locations
@@ -156,5 +168,4 @@ extension RickAndMortyAPIClient {
             }
         }
     }
-
 }

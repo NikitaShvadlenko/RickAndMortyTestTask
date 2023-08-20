@@ -106,7 +106,7 @@ struct MainInfo: View {
             Image(uiImage: UIImage(data: viewModel.imageData ?? Data()) ?? UIImage())
                 .resizable()
                 .frame(width: 148, height: 148)
-                .background(Color.red)
+                .background(Color(asset: Asset.blackCard))
                 .cornerRadius(16)
                 .padding(.bottom, 24)
             Text(viewModel.generaInformation?.name ?? "")

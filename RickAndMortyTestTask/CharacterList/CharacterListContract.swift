@@ -15,7 +15,6 @@ protocol CharacterListInteractorInput {
     func fetchImage(url: URL)
 }
 
-
 protocol CharacterListInteractorOutput: AnyObject {
     func interactor(
         _ interactor: CharacterListInteractorInput,
