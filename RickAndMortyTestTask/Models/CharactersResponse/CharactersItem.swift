@@ -14,16 +14,12 @@ struct CharacterItem: Codable {
     let species: String
     let type: String
     let gender: String
-    let origin: CharacterOrigin
-    let location: CharacterLocation
+    let origin: CharacterItemOrigin
     let image: URL
+    let episode: [URL]
 }
 
-struct CharacterOrigin: Codable {
+struct CharacterItemOrigin: Codable {
     let name: String
-    // we don't need a location url for this task
-}
-
-struct CharacterLocation: Codable {
-    let name: String
+    let url: URL?
 }

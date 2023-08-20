@@ -13,6 +13,11 @@ protocol RickAndMortyAPIClientProtocol {
     func fetchImage(from url: URL) async throws -> Data
 }
 
+protocol ManagesDetailCharacterRequests {
+    func fetchEpisodes(from urls: [URL]) async throws -> [Episode]
+    func fetchOrigin(from url: URL) -> Origin
+}
+
 final class RickAndMortyAPIClient {
     enum RickAndMortyApiError: Error {
         case failedToCreateURL
@@ -53,6 +58,42 @@ extension RickAndMortyAPIClient: RickAndMortyAPIClientProtocol {
         return characterList
     }
 }
+// MARK: - ManagesDetailCharacterRequests
+extension RickAndMortyAPIClient: ManagesDetailCharacterRequests {
+    func fetchEpisodes(from urls: [URL]) async throws -> [Episode] {
+        var episodes: [Episode] = []
+        await withTaskGroup(of: Episode?.self) { group in
+            for url in urls {
+                group.addTask {
+                    do {
+                        let (data, response) = try await self.session.data(from: url)
+                        guard let httpResonse = response as? HTTPURLResponse,
+                              httpResonse.statusCode == 200 else {
+                            print("invalid response")
+                            return nil
+                        }
+                        let episode = try JSONDecoder().decode(Episode.self, from: data)
+                        return episode
+                    } catch {
+                        print("Error fetching or parsing episode from \(url): \(error)")
+                        return nil
+                    }
+                }
+            }
+
+            for await episode in group {
+                if let episode = episode {
+                    episodes.append(episode)
+                }
+            }
+        }
+        return episodes
+    }
+
+    func fetchOrigin(from url: URL) -> Origin {
+        return Origin(name: "Earth", type: "Planet")
+    }
+}
 
 // MARK: - Private methods
 extension RickAndMortyAPIClient {
@@ -62,6 +103,12 @@ extension RickAndMortyAPIClient {
         }
         url.append(path: requestType.rawValue)
         return url
+    }
+
+    func fetchEpisodes(from url: URL) async throws -> [Episode] {
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let decoder = JSONDecoder()
+        return try decoder.decode([Episode].self, from: data)
     }
 }
 
