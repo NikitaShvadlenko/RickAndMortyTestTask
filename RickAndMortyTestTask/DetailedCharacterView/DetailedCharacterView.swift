@@ -12,7 +12,11 @@ struct DetailedCharacterView: View {
     let characterID: Int
 
     var body: some View {
-        Text("Hello \(characterID)")
+        NavigationView {
+            Color(asset: Asset.backgroundColor)
+                .ignoresSafeArea()
+        }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

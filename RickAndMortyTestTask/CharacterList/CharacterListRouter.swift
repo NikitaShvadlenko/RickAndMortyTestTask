@@ -12,7 +12,6 @@ extension CharacterListRouter: CharacterListRouterInput {
         let characterDetailView = DetailedCharacterView(characterID: characterID)
         let hostingController = UIHostingController(rootView: characterDetailView)
         viewController?.navigationController?.pushViewController(hostingController, animated: true)
-
     }
 }
 
