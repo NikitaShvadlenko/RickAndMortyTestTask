@@ -34,3 +34,5 @@
 I would love your feedback on this assignment. 
 Please contact me at any convinient time.
 Thank you for the opportunity :)
+
+the task: https://docs.google.com/document/d/1gU-dREAeJM_jQZ8Mo9j4LtpTgNW9gLw96xY9SgulbDY/edit
