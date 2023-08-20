@@ -15,6 +15,7 @@ final class CharacterListPresenter {
 // MARK: - CharacterListViewOutput
 extension CharacterListPresenter: CharacterListViewOutput {
     func viewDidLoad(_ view: CharacterListViewInput) {
+        view.displayLoadingOverlay()
         view.configureViews()
     }
 }
@@ -47,7 +48,9 @@ extension CharacterListPresenter: CharacterListInteractorOutput {
         case let .success(characters):
             currentPage = page
             collectionViewManager.setCharacterList(with: collectionViewManager.characters + characters)
+            view?.hideLoadingOverlay()
         case let .failure(error):
+            view?.displayLoadingOverlay()
             print(error)
         }
         isLoading = false

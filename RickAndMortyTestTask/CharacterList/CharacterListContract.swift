@@ -2,6 +2,8 @@ import UIKit
 // sourcery: AutoMockable
 protocol CharacterListViewInput: AnyObject {
     func configureViews()
+    func displayLoadingOverlay()
+    func hideLoadingOverlay()
 }
 
 protocol CharacterListViewOutput {

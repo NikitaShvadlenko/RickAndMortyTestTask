@@ -2,6 +2,8 @@ import UIKit
 
 final class CharacterListView: UIView {
 
+    let activityIndicator = UIActivityIndicatorView(style: .large)
+
     lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(
             frame: .zero,
@@ -34,12 +36,18 @@ extension CharacterListView {
     private func configureViews() {
         backgroundColor = Asset.backgroundColor.color
         addSubview(collectionView)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.color = UIColor(asset: Asset.white)
+        collectionView.addSubview(activityIndicator)
 
         NSLayoutConstraint.activate([
             collectionView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor),
             collectionView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
             collectionView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+
+            activityIndicator.centerXAnchor.constraint(equalTo: collectionView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor)
         ])
     }
 }

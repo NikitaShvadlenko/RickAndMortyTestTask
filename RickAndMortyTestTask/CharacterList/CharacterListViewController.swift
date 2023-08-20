@@ -14,6 +14,16 @@ final class CharacterListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter?.viewDidLoad(self)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        title = L10n.characters
+        navigationController?.navigationBar.prefersLargeTitles = true
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        title = ""
+        navigationController?.navigationBar.prefersLargeTitles = false
         navigationItem.largeTitleDisplayMode = .always
     }
 
@@ -26,6 +36,14 @@ final class CharacterListViewController: UIViewController {
 
 // MARK: - CharacterListViewInput
 extension CharacterListViewController: CharacterListViewInput {
+    func displayLoadingOverlay() {
+        characterListView.activityIndicator.startAnimating()
+    }
+
+    func hideLoadingOverlay() {
+        characterListView.activityIndicator.stopAnimating()
+    }
+
     func configureViews() {
     }
 }
