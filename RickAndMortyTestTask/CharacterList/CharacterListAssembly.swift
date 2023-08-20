@@ -20,6 +20,7 @@ enum CharacterListAssembly {
 
         interactor.presenter = presenter
         interactor.apiClient = apiClient
+        interactor.imageDownloader = apiClient
 
         router.viewController = viewController
         router.presenter = presenter

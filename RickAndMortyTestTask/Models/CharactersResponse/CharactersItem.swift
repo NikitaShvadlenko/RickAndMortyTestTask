@@ -20,6 +20,12 @@ struct CharacterItem: Codable {
 }
 
 struct CharacterItemOrigin: Codable {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.name = try container.decode(String.self, forKey: .name)
+        self.url = try? container.decodeIfPresent(URL.self, forKey: .url)
+    }
+    
     let name: String
     let url: URL?
 }

@@ -8,14 +8,17 @@
 
 import Foundation
 
+protocol ImageDownloaderProtocol {
+    func fetchImage(from url: URL) async throws -> Data
+}
+
 protocol RickAndMortyAPIClientProtocol {
     func fetchCharacters(for page: Int) async throws -> CharactersListResponse
-    func fetchImage(from url: URL) async throws -> Data
 }
 
 protocol ManagesDetailCharacterRequests {
     func fetchEpisodes(from urls: [URL]) async throws -> [Episode]
-    func fetchOrigin(from url: URL) -> Origin
+    func fetchOrigin(from url: URL) async throws  -> Origin
     func fetchCharacter(characterId: Int) async throws -> CharacterItem
 }
 
@@ -35,8 +38,8 @@ final class RickAndMortyAPIClient {
     }
 }
 
-// MARK: - RickAndMortyAPIClientProtocol
-extension RickAndMortyAPIClient: RickAndMortyAPIClientProtocol {
+// MARK: - ImageDownloaderProtocol
+extension RickAndMortyAPIClient: ImageDownloaderProtocol {
     func fetchImage(from url: URL) async throws -> Data {
         let (data, response) = try await session.data(from: url)
         guard let httpResonse = response as? HTTPURLResponse,
@@ -45,7 +48,10 @@ extension RickAndMortyAPIClient: RickAndMortyAPIClientProtocol {
         }
         return data
     }
+}
 
+// MARK: - RickAndMortyAPIClientProtocol
+extension RickAndMortyAPIClient: RickAndMortyAPIClientProtocol {
     func fetchCharacters(for page: Int) async throws -> CharactersListResponse {
         var url = try setRequestUrl(baseUrlString: baseURL, requestType: .characters)
         let queryItem = URLQueryItem(name: "page", value: "\(page)")
@@ -91,8 +97,14 @@ extension RickAndMortyAPIClient: ManagesDetailCharacterRequests {
         return episodes
     }
 
-    func fetchOrigin(from url: URL) -> Origin {
-        return Origin(name: "Earth", type: "Planet")
+    func fetchOrigin(from url: URL) async throws  -> Origin {
+        let (data, response) = try await session.data(from: url)
+        guard let httpResonse = response as? HTTPURLResponse,
+              httpResonse.statusCode == 200 else {
+            throw RickAndMortyApiError.invalidResponse
+        }
+        let origin = try JSONDecoder().decode(Origin.self, from: data)
+        return origin
     }
 
     func fetchCharacter(characterId: Int) async throws -> CharacterItem {

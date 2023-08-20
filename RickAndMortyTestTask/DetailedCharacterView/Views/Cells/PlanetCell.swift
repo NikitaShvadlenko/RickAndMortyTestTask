@@ -10,6 +10,7 @@ import SwiftUI
 
 struct PlanetCell: View {
 
+    let originType: String
     let planetName: String
 
     var body: some View {
@@ -28,7 +29,7 @@ struct PlanetCell: View {
                 Text(planetName)
                     .titleStyle()
                 Spacer()
-                Text(L10n.planet)
+                Text(originType)
                     .bodyStyle()
             }
             .padding([.leading, .top, .bottom], 16)
@@ -40,6 +41,6 @@ struct PlanetCell: View {
 
 struct PlanetCell_Previews: PreviewProvider {
     static var previews: some View {
-        PlanetCell(planetName: "Earth")
+        PlanetCell(originType: "Planet", planetName: "Earth")
     }
 }
