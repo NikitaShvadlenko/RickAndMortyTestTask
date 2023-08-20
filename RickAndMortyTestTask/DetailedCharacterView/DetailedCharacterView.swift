@@ -54,7 +54,7 @@ struct DetailedCharacterView: View {
                 ) {
                     PlanetCell(originType: viewModel.origin?.type ?? "", planetName: viewModel.origin?.name ?? "")
                         .listRowInsets(EdgeInsets())
-                        .background(Color.clear)
+                        .background(Color(asset: Asset.backgroundColor))
                 }
                 .listRowInsets(EdgeInsets())
                 .background(Color(asset: Asset.backgroundColor))

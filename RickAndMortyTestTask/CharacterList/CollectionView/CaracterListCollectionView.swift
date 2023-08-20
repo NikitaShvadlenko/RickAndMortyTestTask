@@ -14,7 +14,7 @@ final class CaracterListCollectionView: UIView {
         collectionView.isPagingEnabled = false
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .clear
+        collectionView.backgroundColor = UIColor(asset: Asset.backgroundColor)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.register(CharacterCell.self, forCellWithReuseIdentifier: "\(CharacterCell.self)")
         return collectionView

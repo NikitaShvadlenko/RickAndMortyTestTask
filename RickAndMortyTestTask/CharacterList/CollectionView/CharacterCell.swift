@@ -21,6 +21,7 @@ final class CharacterCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
         imageView.backgroundColor = Asset.blackCard.color
         imageView.addSubview(activityIndicator)
         return imageView
