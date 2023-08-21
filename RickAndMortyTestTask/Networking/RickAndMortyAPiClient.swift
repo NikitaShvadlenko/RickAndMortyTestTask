@@ -42,7 +42,7 @@ final class RickAndMortyAPIClient {
 // MARK: - ImageDownloaderProtocol
 extension RickAndMortyAPIClient: ImageDownloaderProtocol {
     func fetchImage(from url: URL) async throws -> Data {
-        let data = try await fetchDataFromUrl(from: url, nil)
+        let data = try await fetchDataFromUrl(from: url)
         return data
     }
 }
@@ -90,7 +90,7 @@ extension RickAndMortyAPIClient: ManagesDetailCharacterRequests {
     }
 
     func fetchOrigin(from url: URL) async throws  -> Origin {
-        let data = try await fetchDataFromUrl(from: url, nil)
+        let data = try await fetchDataFromUrl(from: url)
         guard let origin = decodeDataFrom(element: Origin.self, data: data) else {
             throw RickAndMortyApiError.failedToDecodeJson
         }
@@ -99,7 +99,7 @@ extension RickAndMortyAPIClient: ManagesDetailCharacterRequests {
 
     func fetchCharacter(characterId: Int) async throws -> CharacterItem {
         let url = try setRequestUrl(baseUrlString: baseURL, requestType: .character(identificator: characterId))
-        let data = try await fetchDataFromUrl(from: url, nil)
+        let data = try await fetchDataFromUrl(from: url)
         guard let character = decodeDataFrom(element: CharacterItem.self, data: data) else {
             throw RickAndMortyApiError.failedToDecodeJson
         }
@@ -125,7 +125,7 @@ extension RickAndMortyAPIClient {
         return result
     }
 
-    private func fetchDataFromUrl(from url: URL, _ queryItems: [URLQueryItem]?) async throws -> Data {
+    private func fetchDataFromUrl(from url: URL, _ queryItems: [URLQueryItem]? = nil) async throws -> Data {
         var url = url
         if let queryItems = queryItems {
              url = url.appending(queryItems: queryItems)
