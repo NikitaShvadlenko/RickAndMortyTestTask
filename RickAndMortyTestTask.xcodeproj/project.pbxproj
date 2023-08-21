@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -30,7 +30,6 @@
 		9E7481B0D1BB039B1A5D8013 /* TitleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF506AB52EF88EC22A7E568 /* TitleModifier.swift */; };
 		A2926E2573CA11337BA8D65E /* CharacterListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FB95D512331CF612E215BB /* CharacterListPresenter.swift */; };
 		A4019F0EAF4DDCE97D773181 /* CharacterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7D1A4F39146E66888A1ED4 /* CharacterListViewController.swift */; };
-		ACD9AAEABE2C79C6083169C5 /* CharactersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72F0CA62634ADC65BAFCA9B /* CharactersResponse.swift */; };
 		B69088B410C9EE880B2B418E /* BodySmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6764B31965508BEB746CE /* BodySmall.swift */; };
 		B73877A6BE6805AFB24389F9 /* CharacterListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC1F38E695BBF5192D628D1 /* CharacterListItem.swift */; };
 		BDB4F47A9D170E6EAE1A10E0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2F34A9C9C4F62E39F434376 /* Localizable.strings */; };
@@ -78,7 +77,6 @@
 		DEB6BA2E01A06F8ECC2ACBFC /* SFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbol.swift; sourceTree = "<group>"; };
 		E0ABCD3C939FE62357DE5EA6 /* DetailedCharacterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedCharacterViewModel.swift; sourceTree = "<group>"; };
 		E3AEE46BE757A9F5119E6BD3 /* PlanetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetCell.swift; sourceTree = "<group>"; };
-		E72F0CA62634ADC65BAFCA9B /* CharactersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersResponse.swift; sourceTree = "<group>"; };
 		F310E6D43B555071024A1FCE /* DetailedCharacterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedCharacterView.swift; sourceTree = "<group>"; };
 		FCCE050754F0CB123764D185 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		FFC1F38E695BBF5192D628D1 /* CharacterListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterListItem.swift; sourceTree = "<group>"; };
@@ -99,7 +97,6 @@
 			isa = PBXGroup;
 			children = (
 				8C62B697B637BE045FD3025B /* CharactersItem.swift */,
-				E72F0CA62634ADC65BAFCA9B /* CharactersResponse.swift */,
 			);
 			path = CharactersResponse;
 			sourceTree = "<group>";
@@ -362,7 +359,6 @@
 				A4019F0EAF4DDCE97D773181 /* CharacterListViewController.swift in Sources */,
 				0CD876308897FF39788FE865 /* CharactersItem.swift in Sources */,
 				646D911843A8A765F2D21F4F /* CharactersListResponse.swift in Sources */,
-				ACD9AAEABE2C79C6083169C5 /* CharactersResponse.swift in Sources */,
 				97D9EF491B077ED8B8CC4057 /* DetailCharacterAssembly.swift in Sources */,
 				CD13F9C14CA4316F1A46C8BA /* DetailedCharacterView.swift in Sources */,
 				D02625F306B0501D0B48B7EE /* DetailedCharacterViewModel.swift in Sources */,

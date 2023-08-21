@@ -112,6 +112,7 @@ struct MainInfo: View {
             Text(viewModel.generaInformation?.name ?? "")
                 .foregroundColor(Color(asset: Asset.white))
                 .font(.system(size: 22, weight: .semibold))
+                .multilineTextAlignment(.center)
                 .padding(.bottom, 8)
             Text(viewModel.generaInformation?.status ?? "")
                 .foregroundColor(Color(asset: Asset.primary))
