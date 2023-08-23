@@ -13,5 +13,5 @@ protocol Request {
     var path: String { get }
     var method: HTTPMethod { get }
     var queryItems: [URLQueryItem]? { get }
-    var mapper: Mapper { get }
+    var mapper: any Mapper { get }
 }

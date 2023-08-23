@@ -9,14 +9,7 @@
 import Foundation
 
 struct DataMapper: Mapper {
-    enum DataMapperError: Error {
-        case incorrectDataType
-    }
-
-    func map<T>(_ type: T.Type, from data: Data) throws -> T {
-        guard let data = data as? T else {
-            throw DataMapperError.incorrectDataType
-        }
+    func map(from data: Data) throws -> Data {
         return data
     }
 }

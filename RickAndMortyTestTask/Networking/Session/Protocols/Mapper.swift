@@ -9,5 +9,6 @@
 import Foundation
 
 protocol Mapper {
-    func map<T: Decodable>(_ type: T.Type, from data: Data) throws -> T
+    associatedtype MappedType
+    func map(from data: Data) throws -> MappedType
 }

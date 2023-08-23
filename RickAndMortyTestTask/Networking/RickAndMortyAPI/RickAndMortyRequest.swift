@@ -9,20 +9,22 @@
 import Foundation
 
 enum RickAndMortyRequest {
-    case locations
     case characters(page: Int)
     case episodes
     case character(identificator: Int)
-    case dataRequestFromUrl(url: URL)
-    case imageDataFromURL(url: URL)
+    case origin(url: URL)
+    case episode(url: URL)
+    case image(url: URL)
 }
 
 extension RickAndMortyRequest: Request {
     var baseUrl: URL {
         switch self {
-        case .dataRequestFromUrl(let url):
+        case .origin(let url):
             return url
-        case .imageDataFromURL(let url):
+        case .image(let url):
+            return url
+        case .episode(let url):
             return url
         default:
             return URL(string: "https://rickandmortyapi.com")!
@@ -31,15 +33,13 @@ extension RickAndMortyRequest: Request {
 
     var path: String {
         switch self {
-        case .locations:
-            return "api/location"
         case .characters:
             return "api/character"
         case .episodes:
             return "api/episode"
         case .character(let identificator):
             return "api/character/\(identificator)"
-        case .dataRequestFromUrl, .imageDataFromURL:
+        case .origin, .episode, .image:
             return ""
         }
     }
@@ -57,12 +57,20 @@ extension RickAndMortyRequest: Request {
         }
     }
 
-    var mapper: Mapper {
+    var mapper: any Mapper {
         switch self {
-        case .imageDataFromURL:
-           return DataMapper()
-        default:
-            return JSONMapper()
+        case .characters:
+            return JSONMapper<CharactersListResponse>()
+        case .episode:
+            return JSONMapper<Episode>()
+        case .character:
+            return JSONMapper<CharacterItem>()
+        case .image:
+            return DataMapper()
+        case .episodes:
+            return JSONMapper<Episode>()
+        case .origin:
+            return JSONMapper<Origin>()
         }
     }
 

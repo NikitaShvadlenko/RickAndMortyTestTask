@@ -42,7 +42,9 @@ extension Session: SessionProtocol {
             throw SessionError.invalidResponse
         }
         let mapper = request.mapper
-        let mappedResponse = try mapper.map(T.self, from: data)
+        guard let mappedResponse = try mapper.map(from: data) as? T else {
+            throw SessionError.invalidMappingType
+        }
         return mappedResponse
     }
 

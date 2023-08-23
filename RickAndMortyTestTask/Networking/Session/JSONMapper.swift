@@ -8,9 +8,9 @@
 
 import Foundation
 
-struct JSONMapper: Mapper {
-    func map<T: Decodable>(_ type: T.Type, from data: Data) throws -> T {
-        let result = try JSONDecoder().decode(type, from: data)
+struct JSONMapper<T: Decodable>: Mapper {
+    func map(from data: Data) throws -> T {
+        let result = try JSONDecoder().decode(T.self, from: data)
         return result
     }
 }

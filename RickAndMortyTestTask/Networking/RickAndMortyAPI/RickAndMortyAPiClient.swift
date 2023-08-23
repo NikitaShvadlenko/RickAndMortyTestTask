@@ -32,7 +32,7 @@ final class RickAndMortyAPIClient {
 // MARK: - ImageDownloaderProtocol
 extension RickAndMortyAPIClient: ImageDownloaderProtocol {
     func fetchImage(from url: URL) async throws -> Data {
-        try await session.makeDataRequest(RickAndMortyRequest.imageDataFromURL(url: url))
+        try await session.makeDataRequest(RickAndMortyRequest.image(url: url))
     }
 }
 
@@ -47,14 +47,14 @@ extension RickAndMortyAPIClient: ManagesDetailCharacterRequests {
     func fetchEpisodes(from urls: [URL]) async throws -> [Episode] {
         var requests: [RickAndMortyRequest] = []
         for url in urls {
-            let request = RickAndMortyRequest.dataRequestFromUrl(url: url)
+            let request = RickAndMortyRequest.episode(url: url)
             requests.append(request)
         }
         return try await session.makeBatchDataRequest(requests: requests)
     }
 
     func fetchOrigin(from url: URL) async throws  -> Origin {
-        return try await session.makeDataRequest(RickAndMortyRequest.dataRequestFromUrl(url: url))
+        return try await session.makeDataRequest(RickAndMortyRequest.origin(url: url))
     }
 
     func fetchCharacter(characterId: Int) async throws -> CharacterItem {
