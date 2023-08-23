@@ -30,6 +30,14 @@
 		9E7481B0D1BB039B1A5D8013 /* TitleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF506AB52EF88EC22A7E568 /* TitleModifier.swift */; };
 		A2926E2573CA11337BA8D65E /* CharacterListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 13FB95D512331CF612E215BB /* CharacterListPresenter.swift */; };
 		A4019F0EAF4DDCE97D773181 /* CharacterListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A7D1A4F39146E66888A1ED4 /* CharacterListViewController.swift */; };
+		B4C7044F2A94A77600859381 /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C7044E2A94A77600859381 /* Request.swift */; };
+		B4C704512A94AF4900859381 /* JSONMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C704502A94AF4900859381 /* JSONMapper.swift */; };
+		B4C704532A94AF5E00859381 /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C704522A94AF5E00859381 /* HTTPMethod.swift */; };
+		B4C704552A94AF7E00859381 /* Mapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C704542A94AF7E00859381 /* Mapper.swift */; };
+		B4C704572A956BE200859381 /* SessionProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C704562A956BE200859381 /* SessionProtocol.swift */; };
+		B4C704592A956BED00859381 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C704582A956BED00859381 /* Session.swift */; };
+		B4C7045E2A956E1F00859381 /* RickAndMortyRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C7045D2A956E1F00859381 /* RickAndMortyRequest.swift */; };
+		B4C704622A9583E800859381 /* DataMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C704612A9583E800859381 /* DataMapper.swift */; };
 		B69088B410C9EE880B2B418E /* BodySmall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E6764B31965508BEB746CE /* BodySmall.swift */; };
 		B73877A6BE6805AFB24389F9 /* CharacterListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC1F38E695BBF5192D628D1 /* CharacterListItem.swift */; };
 		BDB4F47A9D170E6EAE1A10E0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2F34A9C9C4F62E39F434376 /* Localizable.strings */; };
@@ -68,6 +76,14 @@
 		8C62B697B637BE045FD3025B /* CharactersItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersItem.swift; sourceTree = "<group>"; };
 		9764A4DD04BD1F2C94F69EDB /* RickAndMortyAPiClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyAPiClient.swift; sourceTree = "<group>"; };
 		9933CB70901EA73BDC620BA4 /* DetailCharacterAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCharacterAssembly.swift; sourceTree = "<group>"; };
+		B4C7044E2A94A77600859381 /* Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		B4C704502A94AF4900859381 /* JSONMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONMapper.swift; sourceTree = "<group>"; };
+		B4C704522A94AF5E00859381 /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
+		B4C704542A94AF7E00859381 /* Mapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mapper.swift; sourceTree = "<group>"; };
+		B4C704562A956BE200859381 /* SessionProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionProtocol.swift; sourceTree = "<group>"; };
+		B4C704582A956BED00859381 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		B4C7045D2A956E1F00859381 /* RickAndMortyRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RickAndMortyRequest.swift; sourceTree = "<group>"; };
+		B4C704612A9583E800859381 /* DataMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataMapper.swift; sourceTree = "<group>"; };
 		BCF506AB52EF88EC22A7E568 /* TitleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleModifier.swift; sourceTree = "<group>"; };
 		C2958020FBE6C574678A794C /* EpisodeCellStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EpisodeCellStyle.swift; sourceTree = "<group>"; };
 		C39456A562ED5D015AE257A5 /* RickAndMortyTestTask.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = RickAndMortyTestTask.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +221,37 @@
 			path = Strings;
 			sourceTree = "<group>";
 		};
+		B4C7045A2A956BFE00859381 /* Session */ = {
+			isa = PBXGroup;
+			children = (
+				B4C704522A94AF5E00859381 /* HTTPMethod.swift */,
+				B4C7045B2A956D6F00859381 /* Protocols */,
+				B4C704502A94AF4900859381 /* JSONMapper.swift */,
+				B4C704612A9583E800859381 /* DataMapper.swift */,
+				B4C704582A956BED00859381 /* Session.swift */,
+			);
+			path = Session;
+			sourceTree = "<group>";
+		};
+		B4C7045B2A956D6F00859381 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				B4C7044E2A94A77600859381 /* Request.swift */,
+				B4C704562A956BE200859381 /* SessionProtocol.swift */,
+				B4C704542A94AF7E00859381 /* Mapper.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		B4C704632A958AD100859381 /* RickAndMortyAPI */ = {
+			isa = PBXGroup;
+			children = (
+				9764A4DD04BD1F2C94F69EDB /* RickAndMortyAPiClient.swift */,
+				B4C7045D2A956E1F00859381 /* RickAndMortyRequest.swift */,
+			);
+			path = RickAndMortyAPI;
+			sourceTree = "<group>";
+		};
 		C2A181C62629060E60A16821 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,7 +285,8 @@
 		E78B9ADDD8DD1FD1CD14460B /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				9764A4DD04BD1F2C94F69EDB /* RickAndMortyAPiClient.swift */,
+				B4C704632A958AD100859381 /* RickAndMortyAPI */,
+				B4C7045A2A956BFE00859381 /* Session */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -352,21 +400,29 @@
 				C3D96C95B3AC3D8A97850E07 /* CharacterListCollectionViewManager.swift in Sources */,
 				DA777FF407487DFDACB88031 /* CharacterListContract.swift in Sources */,
 				85791737F8A1533BDBCA059D /* CharacterListInteractor.swift in Sources */,
+				B4C7045E2A956E1F00859381 /* RickAndMortyRequest.swift in Sources */,
 				B73877A6BE6805AFB24389F9 /* CharacterListItem.swift in Sources */,
+				B4C704552A94AF7E00859381 /* Mapper.swift in Sources */,
 				A2926E2573CA11337BA8D65E /* CharacterListPresenter.swift in Sources */,
+				B4C704512A94AF4900859381 /* JSONMapper.swift in Sources */,
+				B4C704622A9583E800859381 /* DataMapper.swift in Sources */,
 				7015EC760CC3089669831FCF /* CharacterListRouter.swift in Sources */,
+				B4C704532A94AF5E00859381 /* HTTPMethod.swift in Sources */,
+				B4C704572A956BE200859381 /* SessionProtocol.swift in Sources */,
 				8ABE017E1430137F761617F5 /* CharacterListView.swift in Sources */,
 				A4019F0EAF4DDCE97D773181 /* CharacterListViewController.swift in Sources */,
 				0CD876308897FF39788FE865 /* CharactersItem.swift in Sources */,
 				646D911843A8A765F2D21F4F /* CharactersListResponse.swift in Sources */,
 				97D9EF491B077ED8B8CC4057 /* DetailCharacterAssembly.swift in Sources */,
 				CD13F9C14CA4316F1A46C8BA /* DetailedCharacterView.swift in Sources */,
+				B4C7044F2A94A77600859381 /* Request.swift in Sources */,
 				D02625F306B0501D0B48B7EE /* DetailedCharacterViewModel.swift in Sources */,
 				306B58FC3BB8971F8AE05785 /* Episode.swift in Sources */,
 				9A3FCD8BDBB3C70A14756165 /* EpisodeCell.swift in Sources */,
 				D068ADA9D1AFCE8B9ABAE715 /* EpisodeCellStyle.swift in Sources */,
 				8553C90A0EF5B7F00E72404E /* Info.swift in Sources */,
 				D0C81312B60D4C495809F29B /* InfoCell.swift in Sources */,
+				B4C704592A956BED00859381 /* Session.swift in Sources */,
 				66EED2C10D8F478274057775 /* InfoCellItem.swift in Sources */,
 				38DCFC3A2FD11AE493045257 /* Origin.swift in Sources */,
 				4F2B85DBB287E75875FE1FF8 /* PlanetCell.swift in Sources */,

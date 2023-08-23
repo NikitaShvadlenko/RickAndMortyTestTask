@@ -25,7 +25,7 @@ struct CharacterItemOrigin: Codable {
         self.name = try container.decode(String.self, forKey: .name)
         self.url = try? container.decodeIfPresent(URL.self, forKey: .url)
     }
-    
+
     let name: String
     let url: URL?
 }
