@@ -46,9 +46,9 @@ final class CharacterListCollectionViewManager: NSObject {
     }
     private var imageWaitingIndexPaths = Set<IndexPath>()
 
-    weak var collecitonView: UICollectionView?
+    weak var collectionView: UICollectionView?
     lazy var dataSource: UICollectionViewDiffableDataSource<CollectionViewSection, CharacterListItem> = {
-        guard let collectionView = self.collecitonView else {
+        guard let collectionView = self.collectionView else {
             fatalError("CollectionView was not set")
         }
 
@@ -73,7 +73,7 @@ final class CharacterListCollectionViewManager: NSObject {
 
 extension CharacterListCollectionViewManager: ManagesListCollectionView {
     func setCollectionView(_ collectionView: UICollectionView) {
-        self.collecitonView = collectionView
+        self.collectionView = collectionView
     }
 
     func setCharacterList(with movieCharacterListItems: [CharacterListItem]) {
